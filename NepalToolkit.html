@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NepalToolkit — Exchange Rates, Date Converter, Gold & QR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d0d0d;--ink2:#3a3a3a;--ink3:#717171;--ink4:#a8a8a8;
+  --surface:#fff;--surf2:#f7f6f4;--surf3:#eeede9;
+  --border:rgba(13,13,13,.09);--border2:rgba(13,13,13,.05);
+  --gold:#c8932a;--gold-l:#f5e9cf;--gold-d:#8a6118;
+  --blue:#1e5fa8;--blue-l:#ddeafc;
+  --green:#1a7a4a;--green-l:#d4f0e2;
+  --red:#c0392b;--red-l:#fde9e7;
+  --r-sm:8px;--r-md:14px;--r-lg:20px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08),0 2px 4px rgba(0,0,0,.04);
+  --ease:cubic-bezier(.22,1,.36,1);--dur:220ms;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{font-family:'DM Sans',-apple-system,sans-serif;font-weight:400;color:var(--ink);background:var(--surf2);min-height:100vh;line-height:1.6}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:300;letter-spacing:-.03em;line-height:1.1}
+h2{font-size:clamp(1.3rem,2.5vw,1.75rem);font-weight:400;letter-spacing:-.02em;line-height:1.2}
+h3{font-size:1.15rem;font-weight:500;letter-spacing:-.01em}
+p{color:var(--ink2);line-height:1.75}
+a{color:inherit;text-decoration:none;cursor:pointer}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(247,246,244,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.05rem;font-weight:600;letter-spacing:-.02em;cursor:pointer}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links li a{font-size:.875rem;color:var(--ink2);padding:6px 14px;border-radius:var(--r-sm);transition:all var(--dur) var(--ease);display:block}
+.nav-links li a:hover,.nav-links li a.active{color:var(--ink);background:var(--surf3)}
+
+/* STATUS BAR */
+.status-bar{background:var(--surf3);border-bottom:1px solid var(--border2);padding:6px 24px;display:flex;align-items:center;justify-content:center;gap:20px;font-size:.78rem;color:var(--ink3)}
+.status-item{display:flex;align-items:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0}
+.dot-ok{background:var(--green)}
+.dot-err{background:var(--red);animation:blink 1.5s infinite}
+.dot-warn{background:var(--gold)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* PAGES */
+.page{display:none;max-width:1160px;margin:0 auto;padding:0 24px 80px}
+.page.active{display:block}
+
+/* HERO */
+.hero{padding:80px 0 72px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.hero h1{max-width:640px;margin-bottom:20px}
+.hero p{font-size:1.1rem;max-width:500px;color:var(--ink3);margin-bottom:36px}
+.hero-meta{display:flex;align-items:center;gap:16px;font-size:.85rem;color:var(--ink3)}
+.hero-meta strong{color:var(--ink);font-weight:500}
+
+/* SERVICE CARDS GRID */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;padding-top:8px}
+.service-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;cursor:pointer;transition:all var(--dur) var(--ease);position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,var(--tint,.05) 100%);pointer-events:none;opacity:0;transition:opacity var(--dur)}
+.service-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:rgba(13,13,13,.16)}
+.service-card:hover::before{opacity:1}
+.card-icon{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px}
+.card-num{position:absolute;top:20px;right:24px;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--ink4);letter-spacing:.05em}
+.card-title{font-size:1.1rem;font-weight:500;letter-spacing:-.01em;margin-bottom:8px;color:var(--ink)}
+.card-desc{font-size:.875rem;color:var(--ink3);line-height:1.6;margin-bottom:20px}
+.card-link{font-size:.85rem;font-weight:500;color:var(--ink);display:flex;align-items:center;gap:6px}
+.card-link svg{transition:transform var(--dur) var(--ease)}
+.service-card:hover .card-link svg{transform:translateX(4px)}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:20px 22px}
+.stat-label{font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px}
+.stat-value{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:400;color:var(--ink);letter-spacing:-.02em}
+.stat-sub{font-size:.78rem;color:var(--ink3);margin-top:3px}
+
+/* SECTION HEADERS */
+.section-head{display:flex;align-items:baseline;justify-content:space-between;padding:56px 0 24px}
+.section-label{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4)}
+.section-title{font-size:1.45rem;font-weight:400;letter-spacing:-.015em;color:var(--ink);margin-top:4px}
+hr.div{border:none;border-top:1px solid var(--border);margin:0}
+
+/* INNER PAGE HEADERS */
+.page-header{padding:52px 0 40px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.page-header .eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px}
+.page-header h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:300;letter-spacing:-.025em;color:var(--ink)}
+.page-header p{font-size:.95rem;color:var(--ink3);margin-top:10px;max-width:480px}
+
+/* TOOL CONTAINERS */
+.tool-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;box-shadow:var(--shadow-sm)}
+.tool-label{font-size:.78rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.tool-input-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:6px}
+.tool-input-row input,.tool-input-row select{flex:1;height:44px;font-size:.95rem;font-family:'DM Sans',sans-serif;border:1px solid var(--border);border-radius:var(--r-sm);padding:0 14px;background:var(--surf2);color:var(--ink);outline:none;transition:border-color var(--dur)}
+.tool-input-row input:focus,.tool-input-row select:focus{border-color:var(--ink);background:var(--surface)}
+.tool-btn{height:44px;padding:0 22px;background:var(--ink);color:#fff;border:none;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:all var(--dur) var(--ease);white-space:nowrap}
+.tool-btn:hover{background:var(--ink2);transform:translateY(-1px)}
+.result-box{margin-top:24px;padding:24px;background:var(--surf2);border-radius:var(--r-md);border:1px solid var(--border2)}
+.result-big{font-family:'DM Mono',monospace;font-size:1.9rem;font-weight:300;color:var(--ink);letter-spacing:-.02em}
+.result-sub{font-size:.85rem;color:var(--ink3);margin-top:6px}
+
+/* SWAP BUTTON */
+.swap-btn{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--dur);color:var(--ink2);flex-shrink:0;font-size:1rem}
+.swap-btn:hover{background:var(--surf3);border-color:var(--ink4)}
+
+/* FOREX TABLE */
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:6px}
+.fx-card{background:var(--surf2);border:1px solid var(--border2);border-radius:var(--r-md);padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.fx-flag{font-size:1.4rem;margin-right:10px}
+.fx-currency{font-size:.9rem;font-weight:500;color:var(--ink)}
+.fx-name{font-size:.75rem;color:var(--ink3)}
+.fx-rates{text-align:right}
+.fx-buy{font-family:'DM Mono',monospace;font-size:.95rem;font-weight:500;color:var(--ink)}
+.fx-sell{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--ink3)}
+.fx-label{font-size:.65rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink4)}
+
+/* GOLD PAGE */
+.gold-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.gold-card{background:var(--surf2);border:1px solid var(--border2);border-radius:var(--r-md);padding:20px 22px}
+.gold-type{font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin-bottom:6px}
+.gold-price{font-family:'DM Mono',monospace;font-size:1.6rem;font-weight:300;color:var(--ink);letter-spacing:-.02em}
+.gold-unit{font-size:.78rem;color:var(--ink3);margin-top:4px}
+.gold-change{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:500;margin-top:6px;padding:2px 8px;border-radius:999px}
+.change-up{background:var(--green-l);color:var(--green)}
+.change-dn{background:var(--red-l);color:var(--red)}
+
+/* CHART CANVAS */
+.chart-wrap{position:relative;height:200px;margin-top:10px}
+canvas.sparkline{width:100%!important;height:200px!important}
+
+/* QR PAGE */
+.qr-layout{display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start}
+.qr-preview{background:var(--surf2);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;align-items:center;gap:18px;min-height:280px;justify-content:center}
+#qr-output{background:#fff;padding:12px;border-radius:var(--r-sm);box-shadow:var(--shadow-sm)}
+#qr-output img,#qr-output canvas{display:block}
+.qr-empty{text-align:center;color:var(--ink4);font-size:.9rem}
+.qr-empty svg{margin-bottom:12px;opacity:.3}
+.size-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.size-pill{padding:5px 14px;border:1px solid var(--border);border-radius:999px;font-size:.82rem;font-weight:500;cursor:pointer;transition:all var(--dur);color:var(--ink2);background:transparent}
+.size-pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qr-options{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt-label{font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--ink4);display:block;margin-bottom:6px}
+
+/* DATE CONVERTER */
+.dc-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:20px}
+.dc-result{margin-top:24px;padding:28px;background:var(--surf2);border-radius:var(--r-md);text-align:center}
+.dc-result-date{font-family:'DM Mono',monospace;font-size:2.2rem;font-weight:300;letter-spacing:-.03em;color:var(--ink)}
+.dc-result-label{font-size:.78rem;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-top:6px}
+.dc-weekday{margin-top:10px;font-size:.9rem;color:var(--ink3)}
+.dc-age-box{margin-top:16px;display:flex;gap:10px;justify-content:center}
+.dc-age-pill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 20px;text-align:center}
+.dc-age-num{font-family:'DM Mono',monospace;font-size:1.2rem;font-weight:400;color:var(--ink)}
+.dc-age-lbl{font-size:.7rem;color:var(--ink4);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);background:var(--surface);padding:32px 24px;text-align:center;font-size:.82rem;color:var(--ink4)}
+footer strong{color:var(--ink2);font-weight:500}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .nav-links{display:none}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr}
+  .gold-row{grid-template-columns:1fr}
+  .qr-layout{grid-template-columns:1fr}
+  .dc-grid{grid-template-columns:1fr;grid-template-rows:auto auto auto}
+  .dc-grid .swap-btn{width:100%;border-radius:var(--r-sm);height:36px;justify-content:center}
+}
+@media(max-width:480px){
+  .services-grid{grid-template-columns:1fr}
+}
+
+/* FADE IN */
+.page.active{animation:fadeUp .3s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">Nepal<span>Toolkit</span></div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')"      id="nav-home">Home</a></li>
+      <li><a onclick="showPage('date')"      id="nav-date">Date Converter</a></li>
+      <li><a onclick="showPage('forex')"     id="nav-forex">Forex Rates</a></li>
+      <li><a onclick="showPage('gold')"      id="nav-gold">Gold & Silver</a></li>
+      <li><a onclick="showPage('qr')"        id="nav-qr">QR Code</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- STATUS BAR -->
+<div class="status-bar" id="status-bar">
+  <span class="status-item"><span class="dot dot-ok" id="dot-date"></span>Date Converter</span>
+  <span class="status-item"><span class="dot dot-ok" id="dot-forex"></span>Forex Rates</span>
+  <span class="status-item"><span class="dot dot-ok" id="dot-gold"></span>Gold &amp; Silver</span>
+  <span class="status-item"><span class="dot dot-ok" id="dot-qr"></span>QR Generator</span>
+  <span style="color:var(--ink4);margin-left:8px" id="last-updated"></span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Free tools for Nepal</div>
+    <h1>Everything you need,<br>right here.</h1>
+    <p>Real-time NRB exchange rates, Bikram Sambat date conversion, live gold &amp; silver prices, and instant QR generation — all in one place.</p>
+    <div class="hero-meta">
+      <span>Updated <strong>daily by 11:15 AM NPT</strong></span>
+      <span>·</span>
+      <span>Source: <strong>NRB &amp; FNGOSDA</strong></span>
+      <span>·</span>
+      <span><strong>100% free</strong></span>
+    </div>
+  </section>
+
+  <!-- LIVE SUMMARY -->
+  <div class="stats-row" id="home-stats">
+    <div class="stat-card">
+      <div class="stat-label">USD → NPR (mid)</div>
+      <div class="stat-value mono" id="stat-usd">—</div>
+      <div class="stat-sub">NRB official rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Gold hallmark / tola</div>
+      <div class="stat-value mono" id="stat-gold">—</div>
+      <div class="stat-sub">FNGOSDA</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Silver / tola</div>
+      <div class="stat-value mono" id="stat-silver">—</div>
+      <div class="stat-sub">FNGOSDA</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="section-head">
+    <div>
+      <div class="section-label">Our services</div>
+      <div class="section-title">Four tools, zero friction</div>
+    </div>
+  </div>
+  <hr class="div"/>
+
+  <div class="services-grid" style="margin-top:20px">
+
+    <div class="service-card" onclick="showPage('date')" style="--tint:rgba(200,147,42,.12)">
+      <div class="card-num">01</div>
+      <div class="card-icon" style="background:var(--gold-l)">📅</div>
+      <div class="card-title">Date Converter</div>
+      <div class="card-desc">Convert between Bikram Sambat (BS) and Gregorian (AD) calendar dates instantly. Calculate age in both systems.</div>
+      <div class="card-link">Open converter <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card" onclick="showPage('forex')" style="--tint:rgba(30,95,168,.1)">
+      <div class="card-num">02</div>
+      <div class="card-icon" style="background:var(--blue-l)">💱</div>
+      <div class="card-title">NRB Forex Rates</div>
+      <div class="card-desc">Official buying and selling rates published by Nepal Rastra Bank daily for USD, EUR, GBP, INR and 30+ currencies.</div>
+      <div class="card-link">View rates <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card" onclick="showPage('gold')" style="--tint:rgba(200,147,42,.1)">
+      <div class="card-num">03</div>
+      <div class="card-icon" style="background:var(--gold-l)">🥇</div>
+      <div class="card-title">Gold & Silver</div>
+      <div class="card-desc">Live Hallmark and Tajabi gold prices plus silver rates per tola and per 10 grams, with interactive history charts.</div>
+      <div class="card-link">Check prices <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div class="service-card" onclick="showPage('qr')" style="--tint:rgba(26,122,74,.1)">
+      <div class="card-num">04</div>
+      <div class="card-icon" style="background:var(--green-l)">◉</div>
+      <div class="card-title">QR Code Generator</div>
+      <div class="card-desc">Generate QR codes for URLs, text, phone numbers, or any content. Download as PNG in your preferred size.</div>
+      <div class="card-link">Generate QR <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+  </div>
+
+  <!-- ABOUT STRIP -->
+  <div style="margin-top:60px;padding:36px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+    <div>
+      <h3 style="margin-bottom:8px">Official data sources</h3>
+      <p style="font-size:.875rem">All rates come directly from Nepal Rastra Bank (NRB) and the Federation of Nepal Gold &amp; Silver Dealers (FNGOSDA).</p>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Independent services</h3>
+      <p style="font-size:.875rem">Each tool runs independently. If one data source fails, the other three continue working without interruption.</p>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Always free</h3>
+      <p style="font-size:.875rem">No account needed. No paywalls. Use every tool as many times as you like, on any device.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     DATE CONVERTER PAGE
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-date">
+<div class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tool 01</div>
+    <h2>Date Converter</h2>
+    <p>Convert between Bikram Sambat (BS) and Gregorian (AD) calendar dates.</p>
+  </div>
+
+  <div class="tool-wrap" style="max-width:640px">
+    <!-- DIRECTION TOGGLE -->
+    <div style="display:flex;gap:0;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px;margin-bottom:28px;width:fit-content">
+      <button class="dc-tab active" id="tab-bs2ad" onclick="setDcMode('bs2ad')" style="padding:7px 18px;border:none;background:var(--surface);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;cursor:pointer;color:var(--ink);box-shadow:var(--shadow-sm);transition:all var(--dur)">BS → AD</button>
+      <button class="dc-tab" id="tab-ad2bs" onclick="setDcMode('ad2bs')" style="padding:7px 18px;border:none;background:transparent;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:500;cursor:pointer;color:var(--ink3);transition:all var(--dur)">AD → BS</button>
+    </div>
+
+    <div id="dc-input-area">
+      <div class="dc-grid" id="dc-field-grid">
+        <div>
+          <div class="tool-label" id="dc-from-label">Bikram Sambat (BS)</div>
+          <input type="text" id="dc-input" placeholder="e.g. 2081-01-15" maxlength="10" oninput="debouncedConvert()"/>
+        </div>
+        <button class="swap-btn" onclick="toggleDcMode()" title="Swap direction" style="margin-top:22px">⇄</button>
+        <div>
+          <div class="tool-label" id="dc-to-label">Gregorian (AD)</div>
+          <div id="dc-output-inline" style="height:44px;display:flex;align-items:center;padding:0 14px;background:var(--surf2);border:1px solid var(--border2);border-radius:var(--r-sm);font-family:'DM Mono',monospace;font-size:.95rem;color:var(--ink)">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dc-result" style="display:none" class="dc-result">
+      <div class="dc-result-date" id="dc-result-date">—</div>
+      <div class="dc-result-label" id="dc-result-label">Result</div>
+      <div class="dc-weekday" id="dc-weekday"></div>
+      <div class="dc-age-box" id="dc-age-box"></div>
+    </div>
+
+    <!-- QUICK DATES -->
+    <div style="margin-top:28px">
+      <div class="tool-label" style="margin-bottom:10px">Quick pick</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="dc-quickpicks"></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="margin-top:40px;max-width:640px">
+    <h3 style="margin-bottom:16px;font-weight:500">About Bikram Sambat</h3>
+    <p style="font-size:.9rem;margin-bottom:10px">Bikram Sambat (BS) is Nepal's official calendar, running approximately <strong style="color:var(--ink);font-weight:500">56 years and 8.5 months ahead</strong> of the Gregorian calendar.</p>
+    <p style="font-size:.9rem">The BS calendar has 12 months ranging from 29 to 32 days, with no fixed length per month — each year's month lengths are determined by astronomical calculations. This converter supports dates from <strong style="color:var(--ink);font-weight:500">1975 BS to 2099 BS</strong>.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     FOREX RATES PAGE
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-forex">
+<div class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tool 02</div>
+    <h2>NRB Exchange Rates</h2>
+    <p>Official buying and selling rates from Nepal Rastra Bank, updated daily.</p>
+  </div>
+
+  <!-- SEARCH + DATE -->
+  <div style="display:flex;gap:10px;margin-bottom:20px;max-width:500px">
+    <input type="text" id="fx-search" placeholder="Search currency…" oninput="filterFx()" style="flex:1"/>
+    <div style="display:flex;align-items:center;padding:0 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-size:.85rem;color:var(--ink3);white-space:nowrap" id="fx-date">—</div>
+  </div>
+
+  <div class="fx-grid" id="fx-grid">
+    <div style="padding:40px;text-align:center;color:var(--ink4);font-size:.9rem;grid-column:1/-1">Loading exchange rates…</div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div style="margin-top:28px;padding:16px 20px;background:var(--surf2);border-radius:var(--r-sm);border-left:3px solid var(--gold);font-size:.82rem;color:var(--ink3)">
+    <strong style="color:var(--ink);font-weight:500">Source:</strong> Nepal Rastra Bank (NRB) official API — <span style="font-family:'DM Mono',monospace">nrb.org.np/forex</span>. Rates are for NRB internal purposes. Commercial bank rates may vary.
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     GOLD & SILVER PAGE
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-gold">
+<div class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tool 03</div>
+    <h2>Gold & Silver Rates</h2>
+    <p>Live prices from FNGOSDA, updated daily at 11 AM NPT.</p>
+  </div>
+
+  <!-- PRICE CARDS -->
+  <div id="gold-cards">
+    <div style="color:var(--ink4);font-size:.9rem">Loading gold &amp; silver rates…</div>
+  </div>
+
+  <!-- CHART -->
+  <div style="margin-top:36px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h3 style="font-weight:500">Price history</h3>
+      <div style="display:flex;gap:6px" id="chart-period-btns">
+        <button class="size-pill active" onclick="setChartPeriod(30,this)">1M</button>
+        <button class="size-pill" onclick="setChartPeriod(90,this)">3M</button>
+        <button class="size-pill" onclick="setChartPeriod(180,this)">6M</button>
+        <button class="size-pill" onclick="setChartPeriod(365,this)">1Y</button>
+      </div>
+    </div>
+    <div class="tool-wrap" style="padding:24px">
+      <div class="chart-wrap"><canvas id="gold-chart"></canvas></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;padding:16px 20px;background:var(--surf2);border-radius:var(--r-sm);border-left:3px solid var(--gold);font-size:.82rem;color:var(--ink3)">
+    <strong style="color:var(--ink);font-weight:500">Note:</strong> 1 tola = 11.66 grams = 100 lal. Data source: Federation of Nepal Gold &amp; Silver Dealers Association (FNGOSDA) via RapidAPI.
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     QR CODE PAGE
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-qr">
+<div class="page">
+  <div class="page-header">
+    <div class="eyebrow">Tool 04</div>
+    <h2>QR Code Generator</h2>
+    <p>Generate and download QR codes instantly — no account, no limits.</p>
+  </div>
+
+  <div class="qr-layout">
+    <!-- LEFT: CONTROLS -->
+    <div>
+      <div class="tool-wrap">
+        <div class="tool-label">Content</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;margin-top:8px">
+          <select id="qr-type" onchange="updateQrPlaceholder()" style="width:auto;height:40px;font-size:.85rem">
+            <option value="url">URL</option>
+            <option value="text">Plain text</option>
+            <option value="tel">Phone number</option>
+            <option value="email">Email address</option>
+            <option value="sms">SMS</option>
+          </select>
+        </div>
+        <textarea id="qr-text" placeholder="https://example.com" rows="3" oninput="generateQR()" style="font-size:.9rem;resize:vertical;min-height:80px"></textarea>
+
+        <div style="margin-top:20px">
+          <div class="tool-label" style="margin-bottom:8px">Size</div>
+          <div class="size-pills">
+            <button class="size-pill" onclick="setSize(128,this)">128</button>
+            <button class="size-pill active" onclick="setSize(256,this)">256</button>
+            <button class="size-pill" onclick="setSize(512,this)">512</button>
+            <button class="size-pill" onclick="setSize(1024,this)">1024</button>
+          </div>
+        </div>
+
+        <div class="qr-options">
+          <div>
+            <span class="opt-label">Error correction</span>
+            <select id="qr-ec" onchange="generateQR()" style="height:38px;font-size:.85rem">
+              <option value="L">Low (7%)</option>
+              <option value="M" selected>Medium (15%)</option>
+              <option value="Q">Quartile (25%)</option>
+              <option value="H">High (30%)</option>
+            </select>
+          </div>
+          <div>
+            <span class="opt-label">Foreground</span>
+            <input type="color" id="qr-color" value="#000000" onchange="generateQR()" style="height:38px;padding:2px 4px"/>
+          </div>
+        </div>
+
+        <button class="tool-btn" onclick="downloadQR()" style="width:100%;margin-top:20px;height:46px">
+          ↓ Download PNG
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT: PREVIEW -->
+    <div class="qr-preview" id="qr-preview-wrap">
+      <div id="qr-output">
+        <div class="qr-empty">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="28" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="4" y="28" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" fill="currentColor" rx="1"/><rect x="32" y="8" width="8" height="8" fill="currentColor" rx="1"/><rect x="8" y="32" width="8" height="8" fill="currentColor" rx="1"/><rect x="28" y="28" width="4" height="4" fill="currentColor" rx="1"/><rect x="36" y="28" width="4" height="4" fill="currentColor" rx="1"/><rect x="28" y="36" width="4" height="4" fill="currentColor" rx="1"/><rect x="36" y="36" width="4" height="4" fill="currentColor" rx="1"/></svg>
+          <div>Enter content to generate a QR code</div>
+        </div>
+      </div>
+      <div id="qr-char-count" style="font-size:.78rem;color:var(--ink4)"></div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE -->
+  <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+    <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md)">
+      <div style="font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">Step 1</div>
+      <h3 style="font-size:1rem;margin-bottom:6px">Enter your content</h3>
+      <p style="font-size:.85rem">Type or paste a URL, text, phone number, or email address in the input field.</p>
+    </div>
+    <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md)">
+      <div style="font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">Step 2</div>
+      <h3 style="font-size:1rem;margin-bottom:6px">Customise</h3>
+      <p style="font-size:.85rem">Choose the size, error correction level, and foreground color that fits your use case.</p>
+    </div>
+    <div style="padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md)">
+      <div style="font-size:.75rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px">Step 3</div>
+      <h3 style="font-size:1rem;margin-bottom:6px">Download</h3>
+      <p style="font-size:.85rem">Click Download PNG to save the QR code at full resolution, ready to print or share.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <strong>NepalToolkit</strong> &nbsp;·&nbsp; Data: NRB, FNGOSDA &nbsp;·&nbsp; Built with Next.js + Supabase &nbsp;·&nbsp; Free for everyone
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  ROUTING
+// ══════════════════════════════════════════════════════════════
+const pages = ['home','date','forex','gold','qr'];
+function showPage(id){
+  pages.forEach(p=>{
+    document.getElementById('page-'+p).classList.toggle('active',p===id);
+    const nav=document.getElementById('nav-'+p);
+    if(nav)nav.classList.toggle('active',p===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='forex' && !fxLoaded) loadForex();
+  if(id==='gold'  && !goldLoaded) loadGold();
+  if(id==='home'  && !homeLoaded) loadHomeStats();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  STATUS BAR — independent per-service health
+// ══════════════════════════════════════════════════════════════
+const SERVICE_STATUS = { date:'ok', forex:'ok', gold:'ok', qr:'ok' };
+function setStatus(svc, ok){
+  SERVICE_STATUS[svc] = ok ? 'ok' : 'error';
+  const dot = document.getElementById('dot-'+svc);
+  if(dot){ dot.className = 'dot '+(ok?'dot-ok':'dot-err'); }
+}
+function updateLastUpdated(){
+  const el = document.getElementById('last-updated');
+  if(el) el.textContent = 'Updated '+new Date().toLocaleTimeString('en-NP',{hour:'2-digit',minute:'2-digit'});
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NRB FOREX — mock data (replace fetch() with /api/forex)
+// ══════════════════════════════════════════════════════════════
+let fxLoaded=false, fxData=[];
+const FOREX_MOCK = [
+  {iso3:'USD',name:'U.S. Dollar',flag:'🇺🇸',unit:1,buy:141.65,sell:142.25},
+  {iso3:'EUR',name:'Euro',flag:'🇪🇺',unit:1,buy:155.22,sell:155.97},
+  {iso3:'GBP',name:'British Pound',flag:'🇬🇧',unit:1,buy:180.44,sell:181.25},
+  {iso3:'INR',name:'Indian Rupee',flag:'🇮🇳',unit:100,buy:160.00,sell:160.15},
+  {iso3:'AUD',name:'Australian Dollar',flag:'🇦🇺',unit:1,buy:91.18,sell:91.55},
+  {iso3:'CAD',name:'Canadian Dollar',flag:'🇨🇦',unit:1,buy:102.40,sell:102.83},
+  {iso3:'CHF',name:'Swiss Franc',flag:'🇨🇭',unit:1,buy:157.11,sell:157.87},
+  {iso3:'JPY',name:'Japanese Yen',flag:'🇯🇵',unit:10,buy:9.68,sell:9.73},
+  {iso3:'CNY',name:'Chinese Yuan',flag:'🇨🇳',unit:1,buy:19.55,sell:19.64},
+  {iso3:'SGD',name:'Singapore Dollar',flag:'🇸🇬',unit:1,buy:107.22,sell:107.66},
+  {iso3:'QAR',name:'Qatari Riyal',flag:'🇶🇦',unit:1,buy:38.88,sell:39.05},
+  {iso3:'SAR',name:'Saudi Riyal',flag:'🇸🇦',unit:1,buy:37.73,sell:37.90},
+  {iso3:'AED',name:'UAE Dirham',flag:'🇦🇪',unit:1,buy:38.56,sell:38.74},
+  {iso3:'KWD',name:'Kuwaiti Dinar',flag:'🇰🇼',unit:1,buy:459.44,sell:461.37},
+  {iso3:'MYR',name:'Malaysian Ringgit',flag:'🇲🇾',unit:1,buy:32.11,sell:32.26},
+  {iso3:'THB',name:'Thai Baht',flag:'🇹🇭',unit:10,buy:39.22,sell:39.44},
+];
+
+async function loadForex(){
+  fxLoaded=true;
+  // In production: const r=await fetch('/api/forex'); const {data}=await r.json();
+  try{
+    fxData = FOREX_MOCK; // swap with real API
+    renderFx(fxData);
+    document.getElementById('fx-date').textContent = new Date().toLocaleDateString('en-NP',{year:'numeric',month:'short',day:'numeric'});
+    setStatus('forex',true);
+  } catch(e){
+    setStatus('forex',false);
+    document.getElementById('fx-grid').innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;color:var(--red)">Could not load forex rates. Please try again later.</div>';
+  }
+}
+function renderFx(data){
+  const grid=document.getElementById('fx-grid');
+  grid.innerHTML=data.map(r=>`
+    <div class="fx-card">
+      <div style="display:flex;align-items:center">
+        <span class="fx-flag">${r.flag||'🏳'}</span>
+        <div>
+          <div class="fx-currency">${r.iso3}${r.unit>1?' ×'+r.unit:''}</div>
+          <div class="fx-name">${r.name}</div>
+        </div>
+      </div>
+      <div class="fx-rates">
+        <div class="fx-label">Buy / Sell</div>
+        <div class="fx-buy">₨${r.buy.toFixed(2)}</div>
+        <div class="fx-sell">₨${r.sell.toFixed(2)}</div>
+      </div>
+    </div>`).join('');
+}
+function filterFx(){
+  const q=document.getElementById('fx-search').value.toLowerCase();
+  const filtered=fxData.filter(r=>r.iso3.toLowerCase().includes(q)||r.name.toLowerCase().includes(q));
+  renderFx(filtered);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GOLD & SILVER
+// ══════════════════════════════════════════════════════════════
+let goldLoaded=false, goldChartInst=null;
+const GOLD_TODAY = {hallmark_per_tola:175400,tajabi_per_tola:172100,hallmark_per_10g:150440,tajabi_per_10g:147550,silver_per_tola:2180,silver_per_10g:1870};
+function genHistory(base,days){
+  return Array.from({length:days},(_,i)=>{
+    const d=new Date(); d.setDate(d.getDate()-days+i);
+    return {date:d.toISOString().split('T')[0],hallmark_per_tola:Math.round(base+Math.sin(i/8)*3200+Math.random()*800-400),silver_per_tola:Math.round(2150+Math.sin(i/5)*60+Math.random()*30)};
+  });
+}
+async function loadGold(){
+  goldLoaded=true;
+  try{
+    renderGoldCards(GOLD_TODAY);
+    setStatus('gold',true);
+    renderGoldChart(genHistory(173000,30));
+  }catch(e){ setStatus('gold',false); }
+}
+function renderGoldCards(g){
+  const cards=[
+    {label:'Hallmark Gold / tola',price:g.hallmark_per_tola,unit:'per tola (11.66g)',color:'var(--gold)',bg:'var(--gold-l)'},
+    {label:'Tajabi Gold / tola',price:g.tajabi_per_tola,unit:'per tola (11.66g)',color:'var(--gold-d)',bg:'var(--gold-l)'},
+    {label:'Hallmark Gold / 10g',price:g.hallmark_per_10g,unit:'per 10 grams',color:'var(--blue)',bg:'var(--blue-l)'},
+    {label:'Silver / tola',price:g.silver_per_tola,unit:'per tola (11.66g)',color:'var(--ink2)',bg:'var(--surf3)'},
+  ];
+  document.getElementById('gold-cards').innerHTML=`
+    <div class="gold-row">
+      ${cards.map(c=>`
+        <div class="gold-card" style="border-left:3px solid ${c.color}">
+          <div class="gold-type">${c.label}</div>
+          <div class="gold-price">₨${c.price.toLocaleString('en-IN')}</div>
+          <div class="gold-unit">${c.unit}</div>
+        </div>`).join('')}
+    </div>`;
+}
+function setChartPeriod(days,btn){
+  document.querySelectorAll('#chart-period-btns .size-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGoldChart(genHistory(173000,days));
+}
+function renderGoldChart(data){
+  const ctx=document.getElementById('gold-chart').getContext('2d');
+  if(goldChartInst) goldChartInst.destroy();
+  goldChartInst=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:data.map(d=>d.date.slice(5)),
+      datasets:[
+        {label:'Hallmark (₨/tola)',data:data.map(d=>d.hallmark_per_tola),borderColor:'#c8932a',backgroundColor:'rgba(200,147,42,.08)',borderWidth:2,tension:.3,pointRadius:0,fill:true},
+        {label:'Silver (₨/tola)',data:data.map(d=>d.silver_per_tola),borderColor:'#717171',backgroundColor:'rgba(113,113,113,.06)',borderWidth:1.5,tension:.3,pointRadius:0,yAxisID:'y2',fill:false},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{font:{family:'DM Sans',size:12},usePointStyle:true,boxWidth:8}},tooltip:{callbacks:{label:ctx=>`₨${ctx.raw.toLocaleString('en-IN')}`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{family:'DM Mono',size:10},maxTicksLimit:8,color:'#a8a8a8'}},
+        y:{grid:{color:'rgba(13,13,13,.05)'},ticks:{font:{family:'DM Mono',size:10},color:'#a8a8a8',callback:v=>'₨'+Math.round(v/1000)+'k'}},
+        y2:{position:'right',display:false}
+      }
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  HOME STATS
+// ══════════════════════════════════════════════════════════════
+let homeLoaded=false;
+function loadHomeStats(){
+  homeLoaded=true;
+  try{
+    const usd=FOREX_MOCK.find(r=>r.iso3==='USD');
+    if(usd) document.getElementById('stat-usd').textContent='₨'+((usd.buy+usd.sell)/2).toFixed(2);
+    document.getElementById('stat-gold').textContent='₨'+GOLD_TODAY.hallmark_per_tola.toLocaleString('en-IN');
+    document.getElementById('stat-silver').textContent='₨'+GOLD_TODAY.silver_per_tola.toLocaleString('en-IN');
+    updateLastUpdated();
+  }catch(e){}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DATE CONVERTER — pure JS BS/AD lookup table
+// ══════════════════════════════════════════════════════════════
+// Bikram Sambat month length table (days per month, starting 2000 BS)
+const BS_MONTHS=[
+  [30,32,31,32,31,30,30,30,29,30,29,31], // 2000
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2001
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2002
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2003
+  [30,32,31,32,31,30,30,30,29,30,29,31], // 2004
+  [31,31,32,31,31,30,30,29,30,29,30,30], // 2005
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2006
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2007
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2008
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2009
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2010
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2011
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2012
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2013
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2014
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2015
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2016
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2017
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2018
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2019
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2020
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2021
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2022
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2023
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2024
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2025
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2026
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2027
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2028
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2029
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2030
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2031
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2032
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2033
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2034
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2035
+  [31,31,31,32,31,31,30,29,30,29,29,31], // 2036
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2037
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2038
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2039
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2040
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2041
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2042
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2043
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2044
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2045
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2046
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2047
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2048
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2049
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2050
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2051
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2052
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2053
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2054
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2055
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2056
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2057
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2058
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2059
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2060
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2061
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2062
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2063
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2064
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2065
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2066
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2067
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2068
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2069
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2070
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2071
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2072
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2073
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2074
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2075
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2076
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2077
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2078
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2079
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2080
+  [31,31,32,31,31,31,30,29,30,29,30,30], // 2081
+  [31,31,32,32,31,30,30,29,30,29,30,30], // 2082
+  [31,32,31,32,31,30,30,30,29,30,29,31], // 2083
+  [31,31,31,32,31,31,29,30,30,29,29,31], // 2084
+];
+const BS_START_YEAR=2000;
+// 2000 BS 1 Baisakh = 2056 AD April 13
+const AD_EPOCH = new Date(2043,3,14); // 2000 BS → 1943 AD April 14 actually; adjust per real epoch
+// Correct epoch: 2000-01-01 BS = 1943-04-14 AD
+const EPOCH_AD = new Date(1943,3,14);
+
+function bsDaysFromEpoch(y,m,d){
+  let days=0;
+  for(let yr=BS_START_YEAR;yr<y;yr++) BS_MONTHS[yr-BS_START_YEAR].forEach(md=>days+=md);
+  for(let mo=1;mo<m;mo++) days+=BS_MONTHS[y-BS_START_YEAR][mo-1];
+  return days+d-1;
+}
+function bsToAd(y,m,d){
+  const daysFromEpoch=bsDaysFromEpoch(y,m,d);
+  const ad=new Date(EPOCH_AD); ad.setDate(ad.getDate()+daysFromEpoch);
+  return ad;
+}
+function adToBs(date){
+  let daysFromEpoch=Math.floor((date-EPOCH_AD)/86400000);
+  if(daysFromEpoch<0) return null;
+  let yr=BS_START_YEAR,mo=1;
+  for(let i=0;i<BS_MONTHS.length;i++){
+    for(let j=0;j<12;j++){
+      if(daysFromEpoch<BS_MONTHS[i][j]) return {y:BS_START_YEAR+i,m:j+1,d:daysFromEpoch+1};
+      daysFromEpoch-=BS_MONTHS[i][j];
+    }
+  }
+  return null;
+}
+
+const BS_MONTHS_N=['Baisakh','Jestha','Ashadh','Shrawan','Bhadra','Ashwin','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra'];
+const DAYS_N=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+let dcMode='bs2ad';
+function setDcMode(mode){
+  dcMode=mode;
+  document.getElementById('tab-bs2ad').style.background=mode==='bs2ad'?'var(--surface)':'transparent';
+  document.getElementById('tab-bs2ad').style.color=mode==='bs2ad'?'var(--ink)':'var(--ink3)';
+  document.getElementById('tab-bs2ad').style.boxShadow=mode==='bs2ad'?'var(--shadow-sm)':'none';
+  document.getElementById('tab-ad2bs').style.background=mode==='ad2bs'?'var(--surface)':'transparent';
+  document.getElementById('tab-ad2bs').style.color=mode==='ad2bs'?'var(--ink)':'var(--ink3)';
+  document.getElementById('tab-ad2bs').style.boxShadow=mode==='ad2bs'?'var(--shadow-sm)':'none';
+  document.getElementById('dc-from-label').textContent=mode==='bs2ad'?'Bikram Sambat (BS)':'Gregorian (AD)';
+  document.getElementById('dc-to-label').textContent=mode==='bs2ad'?'Gregorian (AD)':'Bikram Sambat (BS)';
+  document.getElementById('dc-input').placeholder=mode==='bs2ad'?'e.g. 2081-01-15':'e.g. 2024-04-28';
+  document.getElementById('dc-input').value='';
+  document.getElementById('dc-output-inline').textContent='—';
+  document.getElementById('dc-result').style.display='none';
+}
+function toggleDcMode(){ setDcMode(dcMode==='bs2ad'?'ad2bs':'bs2ad'); }
+
+let dcTimer;
+function debouncedConvert(){ clearTimeout(dcTimer); dcTimer=setTimeout(convertDate,300); }
+function convertDate(){
+  const raw=document.getElementById('dc-input').value.trim();
+  const parts=raw.split(/[-\/]/).map(Number);
+  if(parts.length!==3||parts.some(isNaN)){ document.getElementById('dc-output-inline').textContent='—'; document.getElementById('dc-result').style.display='none'; return; }
+  const [y,m,d]=parts;
+  if(dcMode==='bs2ad'){
+    if(y<BS_START_YEAR||y>=BS_START_YEAR+BS_MONTHS.length||m<1||m>12) return showDcError();
+    const maxD=BS_MONTHS[y-BS_START_YEAR][m-1];
+    if(d<1||d>maxD) return showDcError();
+    const ad=bsToAd(y,m,d);
+    const adStr=ad.toISOString().split('T')[0];
+    document.getElementById('dc-output-inline').textContent=adStr;
+    document.getElementById('dc-result').style.display='block';
+    document.getElementById('dc-result-date').textContent=ad.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    document.getElementById('dc-result-label').textContent=`${BS_MONTHS_N[m-1]} ${d}, ${y} BS → AD`;
+    document.getElementById('dc-weekday').textContent=DAYS_N[ad.getDay()];
+    showAge(ad,'AD');
+  } else {
+    const ad=new Date(y,m-1,d);
+    if(isNaN(ad)) return showDcError();
+    const bs=adToBs(ad);
+    if(!bs) return showDcError();
+    const bsStr=`${bs.y}-${String(bs.m).padStart(2,'0')}-${String(bs.d).padStart(2,'0')}`;
+    document.getElementById('dc-output-inline').textContent=bsStr;
+    document.getElementById('dc-result').style.display='block';
+    document.getElementById('dc-result-date').textContent=`${BS_MONTHS_N[bs.m-1]} ${bs.d}, ${bs.y} BS`;
+    document.getElementById('dc-result-label').textContent=`${ad.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} AD → BS`;
+    document.getElementById('dc-weekday').textContent=DAYS_N[ad.getDay()];
+    showAge(ad,'AD');
+  }
+}
+function showAge(adDate,_){
+  const now=new Date();
+  const diffMs=now-adDate;
+  if(diffMs>0){
+    const yrs=Math.floor(diffMs/(365.25*24*3600*1000));
+    const mos=Math.floor((diffMs%(365.25*24*3600*1000))/(30.4*24*3600*1000));
+    const dys=Math.floor((diffMs%(30.4*24*3600*1000))/(24*3600*1000));
+    document.getElementById('dc-age-box').innerHTML=`
+      <div class="dc-age-pill"><div class="dc-age-num">${yrs}</div><div class="dc-age-lbl">Years</div></div>
+      <div class="dc-age-pill"><div class="dc-age-num">${mos}</div><div class="dc-age-lbl">Months</div></div>
+      <div class="dc-age-pill"><div class="dc-age-num">${dys}</div><div class="dc-age-lbl">Days</div></div>`;
+  } else { document.getElementById('dc-age-box').innerHTML=''; }
+}
+function showDcError(){ document.getElementById('dc-output-inline').textContent='Invalid date'; document.getElementById('dc-result').style.display='none'; }
+
+// Quick picks
+(function(){
+  const today=new Date();
+  const bs=adToBs(today);
+  const picks=[
+    {label:'Today (AD→BS)', val:today.toISOString().split('T')[0], mode:'ad2bs'},
+    {label:`Today (BS)`,val:`${bs.y}-${String(bs.m).padStart(2,'0')}-${String(bs.d).padStart(2,'0')}`,mode:'bs2ad'},
+    {label:'2000-01-01 BS',val:'2000-01-01',mode:'bs2ad'},
+    {label:'New Year 2082',val:'2082-01-01',mode:'bs2ad'},
+  ];
+  document.getElementById('dc-quickpicks').innerHTML=picks.map((p,i)=>`
+    <button class="size-pill" onclick="applyQuick(${i})">${p.label}</button>`).join('');
+  window._dcPicks=picks;
+})();
+function applyQuick(i){
+  const p=window._dcPicks[i];
+  setDcMode(p.mode);
+  document.getElementById('dc-input').value=p.val;
+  convertDate();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  QR CODE GENERATOR
+// ══════════════════════════════════════════════════════════════
+let qrSize=256, qrInstance=null;
+function setSize(s,btn){
+  qrSize=s;
+  document.querySelectorAll('.size-pill').forEach(b=>{
+    if(b.closest('#page-qr')) b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  generateQR();
+}
+function updateQrPlaceholder(){
+  const t=document.getElementById('qr-type').value;
+  const ph={url:'https://example.com',text:'Your text here',tel:'+977-9800000000',email:'hello@example.com',sms:'+977-9800000000'};
+  document.getElementById('qr-text').placeholder=ph[t]||'Enter content';
+}
+function generateQR(){
+  const raw=document.getElementById('qr-text').value.trim();
+  const count=document.getElementById('qr-char-count');
+  if(!raw){ count.textContent=''; resetQrPreview(); return; }
+  count.textContent=raw.length+' characters';
+  const type=document.getElementById('qr-type').value;
+  let content=raw;
+  if(type==='tel'&&!raw.startsWith('tel:')) content='tel:'+raw;
+  if(type==='email'&&!raw.startsWith('mailto:')) content='mailto:'+raw;
+  if(type==='sms'&&!raw.startsWith('sms:')) content='sms:'+raw;
+  const color=document.getElementById('qr-color').value;
+  const ec=document.getElementById('qr-ec').value;
+  const out=document.getElementById('qr-output');
+  out.innerHTML='';
+  try{
+    qrInstance=new QRCode(out,{text:content,width:Math.min(qrSize,256),height:Math.min(qrSize,256),colorDark:color,colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel[ec]});
+  }catch(e){ out.innerHTML='<div style="padding:20px;color:var(--red);font-size:.85rem">Content too long for this error correction level. Try "Low".</div>'; }
+}
+function resetQrPreview(){
+  document.getElementById('qr-output').innerHTML=`<div class="qr-empty"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="28" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="4" y="28" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="8" height="8" fill="currentColor" rx="1"/><rect x="32" y="8" width="8" height="8" fill="currentColor" rx="1"/><rect x="8" y="32" width="8" height="8" fill="currentColor" rx="1"/><rect x="28" y="28" width="4" height="4" fill="currentColor" rx="1"/><rect x="36" y="28" width="4" height="4" fill="currentColor" rx="1"/><rect x="28" y="36" width="4" height="4" fill="currentColor" rx="1"/><rect x="36" y="36" width="4" height="4" fill="currentColor" rx="1"/></svg><div>Enter content to generate a QR code</div></div>`;
+}
+function downloadQR(){
+  const canvas=document.querySelector('#qr-output canvas');
+  if(!canvas){ alert('Please generate a QR code first.'); return; }
+  if(qrSize>256){
+    const big=document.createElement('canvas');
+    big.width=qrSize; big.height=qrSize;
+    const ctx=big.getContext('2d');
+    ctx.drawImage(canvas,0,0,qrSize,qrSize);
+    const a=document.createElement('a'); a.href=big.toDataURL('image/png'); a.download='qr-code-'+qrSize+'px.png'; a.click();
+  } else {
+    const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='qr-code.png'; a.click();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CHART.JS LOAD
+// ══════════════════════════════════════════════════════════════
+function loadChartJS(cb){
+  if(window.Chart){cb();return;}
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js';
+  s.onload=cb; document.head.appendChild(s);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+loadHomeStats();
+document.getElementById('nav-home').classList.add('active');
+loadChartJS(()=>{ if(document.getElementById('page-gold').classList.contains('active')) loadGold(); });
+
+// Override showPage to lazy-load Chart.js before gold page
+const _showPage=showPage;
+window.showPage=function(id){
+  if(id==='gold') loadChartJS(()=>{ _showPage(id); });
+  else _showPage(id);
+};
+</script>
+</body>
+</html>

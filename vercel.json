@@ -1,0 +1,30 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/fetch-rates",
+      "schedule": "30 5 * * *"
+    }
+  ]
+}
+
+// ─────────────────────────────────────────────────────────────
+// CRON SCHEDULE EXPLANATION
+// ─────────────────────────────────────────────────────────────
+// "30 5 * * *" = 05:30 UTC every day
+//              = 11:15 AM NPT (Nepal is UTC+5:45)
+//
+// FNGOSDA publishes gold prices at ~11:00 AM NPT daily.
+// NRB publishes forex rates at ~11:00 AM NPT daily.
+// This job fires 15 minutes after both publish.
+//
+// Vercel Cron sends a POST request to /api/cron/fetch-rates
+// with the Authorization header: Bearer <CRON_SECRET>
+//
+// Free Vercel plan: 2 cron jobs max, minimum daily frequency.
+// Pro plan: up to 40 jobs, minimum hourly.
+//
+// To add a second job for intra-day NRB rate refresh (they
+// sometimes update mid-day), add:
+// { "path": "/api/cron/fetch-rates", "schedule": "0 9 * * *" }
+// = 14:45 NPT afternoon check
+// ─────────────────────────────────────────────────────────────
