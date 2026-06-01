@@ -66,7 +66,7 @@ const nextConfig = {
   // ── Experimental ────────────────────────────────────────────
   experimental: {
     // Partial Pre-Rendering: static shell + streaming dynamic content
-    ppr: true,
+    ppr: false,
   },
 };
 

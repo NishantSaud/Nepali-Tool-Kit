@@ -1,0 +1,7 @@
+{
+  "/date-converter/page": "app/date-converter/page.js",
+  "/nrb-rates/page": "app/nrb-rates/page.js",
+  "/gold-silver/page": "app/gold-silver/page.js",
+  "/qr-generator/page": "app/qr-generator/page.js",
+  "/page": "app/page.js"
+}
