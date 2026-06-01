@@ -1,4 +1,4 @@
-// File: /Users/nishantsaud/Downloads/files/app/gold-silver/page.jsx
+// File: /Users/adeshbohara/Desktop/Nepali-Tool-Kit/app/gold-silver/page.jsx
 import * as entry from '../../../../app/gold-silver/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,4 +1,4 @@
-// File: /Users/nishantsaud/Downloads/files/app/nrb-rates/page.jsx
+// File: /Users/adeshbohara/Desktop/Nepali-Tool-Kit/app/nrb-rates/page.jsx
 import * as entry from '../../../../app/nrb-rates/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

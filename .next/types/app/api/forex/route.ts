@@ -1,4 +1,4 @@
-// File: /Users/nishantsaud/Downloads/files/app/api/forex/route.js
+// File: /Users/adeshbohara/Desktop/Nepali-Tool-Kit/app/api/forex/route.js
 import * as entry from '../../../../../app/api/forex/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -1,4 +1,4 @@
-// File: /Users/nishantsaud/Downloads/files/app/qr-generator/page.jsx
+// File: /Users/adeshbohara/Desktop/Nepali-Tool-Kit/app/qr-generator/page.jsx
 import * as entry from '../../../../app/qr-generator/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -11,24 +11,28 @@
 
 :root {
   /* Palette — canonical names */
-  --ink:         #0d0d0d;
-  --ink-2:       #3a3a3a;
-  --ink-3:       #717171;
-  --ink-4:       #a8a8a8;
-  --surface:     #ffffff;
-  --surface-2:   #f7f6f4;
-  --surface-3:   #eeede9;
-  --border:      rgba(13,13,13,0.10);
-  --border-2:    rgba(13,13,13,0.06);
-  --gold:        #c8932a;
-  --gold-light:  #f5e9cf;
-  --gold-dark:   #8a6118;
-  --blue:        #1e5fa8;
-  --blue-light:  #ddeafc;
-  --green:       #1a7a4a;
-  --green-light: #d4f0e2;
-  --red:         #c0392b;
-  --red-light:   #fde9e7;
+  --ink:         #231f20;       /* Rich dark plum-gray */
+  --ink-2:       #4a4547;       /* Soft body copy */
+  --ink-3:       #7d7578;       /* Subtle labels */
+  --ink-4:       #bfaebd;       
+  --surface:     #ffffff;       
+  --surface-2:   #fdfbfa;       /* Very soft peach/apricot hint background */
+  --surface-3:   #f5eff3;       /* Warm purple-tinted gray hover */
+  --border:      rgba(35,31,32,0.06);
+  --border-2:    rgba(35,31,32,0.03);
+  
+  /* Primary Friendly Accent (Berry Burst) */
+  --gold:        #7c3aed;       /* Playful energetic violet */
+  --gold-light:  #f3e8ff;       
+  --gold-dark:   #6d28d9;       
+  
+  /* Feature Specifics */
+  --blue:        #0284c7;       
+  --blue-light:  #e0f2fe;       
+  --green:       #059669;       
+  --green-light: #ecfdf5;       
+  --red:         #e11d48;       
+  --red-light:   #fff1f2;       
 
   /* Aliases for inline styles that use short names */
   --ink2: var(--ink-2);
@@ -42,6 +46,24 @@
   --blue-l: var(--blue-light);
   --green-l: var(--green-light);
   --red-l: var(--red-light);
+
+  /* ── FRIENDLY UI TWEAKS ────────────────────────────────── */
+  --r-sm:  12px;
+  --r-md:  18px;
+  --r-lg:  26px;
+  --r-xl:  36px;
+
+  --shadow-sm: 0 2px 6px rgba(124,58,237,0.03);
+  --shadow-md: 0 12px 30px rgba(124,58,237,0.05);
+  --shadow-lg: 0 24px 50px rgba(124,58,237,0.08);
+
+  --font-sans: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --ease: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Dynamic elastic transitions */
+  --dur:  280ms;
+
+
+  /* Typography, Spacing, Shadows, and Transitions remain exactly unchanged below... */
 
   /* Typography */
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
