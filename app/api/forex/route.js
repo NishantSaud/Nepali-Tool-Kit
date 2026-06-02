@@ -2,6 +2,12 @@ import { createClient } from '@supabase/supabase-js';
 import { fetchLiveRates } from '../../../backend/services/nrbService.js';
 
 function anonClient() {
+  // 1. Check if keys exist BEFORE initializing
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.warn('[Supabase] Missing credentials. Supabase client will not be initialized.');
+    return null; 
+  }
+
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -16,6 +22,16 @@ export async function GET(request) {
   const supabase = anonClient();
 
   try {
+    // 2. If Supabase client failed to initialize, bypass it and jump straight to NRB fallback
+    if (!supabase) {
+      if (historyCurrency) {
+        throw new Error("Historical data requires Supabase connection.");
+      }
+      console.log('[forex route] Supabase not configured. Route falling back to live NRB API.');
+      const live = await fetchLiveRates();
+      return Response.json({ ok: true, source: 'live', data: live });
+    }
+
     if (historyCurrency) {
       // Return chart history for one currency
       const since = new Date();

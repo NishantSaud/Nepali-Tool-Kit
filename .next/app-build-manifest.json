@@ -11,25 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/gold-silver/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/gold-silver/page.js"
-    ],
-    "/date-converter/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/date-converter/page.js"
-    ],
     "/nrb-rates/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/nrb-rates/page.js"
     ],
-    "/qr-generator/page": [
+    "/date-converter/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/qr-generator/page.js"
+      "static/chunks/app/date-converter/page.js"
     ]
   }
 }
