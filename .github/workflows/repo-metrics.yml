@@ -1,10 +1,7 @@
 name: Generate Repo Metrics
 on:
-  # Runs automatically at midnight every day
   schedule: [{cron: "0 0 * * *"}]
-  # Allows you to manually trigger it from the Actions tab anytime
   workflow_dispatch:
-  # Runs whenever you push changes to the main branch
   push: {branches: ["master", "main"]}
 
 jobs:
@@ -16,30 +13,25 @@ jobs:
       - name: Generate Repository Infographics
         uses: lowlighter/metrics@latest
         with:
-          # Your secret token created in Step 2
           token: ${{ secrets.METRICS_TOKEN }}
-
-          # Target repository specifics
           user: NishantSaud
           repo: Nepali-Tool-Kit
-          output_action: gist
-          committer_gist: 98c887b892d59d281473eb7e9b6f8735
+          
+          # Changes made here:
+          output_action: commit
+          committer_branch: metrics  # <--- The bot will create & push to this branch
           filename: github-metrics.svg
 
-          # Layout & Template settings
           template: repository
           base: header, metadata
 
-          # Plugin: Showcase Contributors details
           plugin_contributors: yes
           plugin_contributors_base: ""
           plugin_contributors_head: ""
           plugin_contributors_ignored: github-actions[bot], dependabot[bot]
           plugin_contributors_contributions: yes
 
-          # Plugin: Showcase Total Lines of Code Changed
           plugin_lines: yes
 
-          # Plugin: Showcase Follow-up analytics (PRs and Issues tracking)
           plugin_followup: yes
           plugin_followup_sections: repositories

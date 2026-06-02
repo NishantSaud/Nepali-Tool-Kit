@@ -174,4 +174,4 @@ MIT — free to use, fork, and deploy.
 
 ## 📊 Repository Insights & Contributors
 
-![Repository Metrics](https://gist.githubusercontent.com/obviouslyadesh/98c887b892d59d281473eb7e9b6f8735/raw/github-metrics.svg)
+![Repository Metrics](https://raw.githubusercontent.com/NishantSaud/Nepali-Tool-Kit/metrics/github-metrics.svg)
