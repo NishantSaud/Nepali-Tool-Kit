@@ -22,8 +22,8 @@ jobs:
           # Target repository specifics
           user: NishantSaud
           repo: Nepali-Tool-Kit
-          output_action: commit
-          committer_branch: main
+          output_action: gist
+          committer_gist: 98c887b892d59d281473eb7e9b6f8735
           filename: github-metrics.svg
 
           # Layout & Template settings
