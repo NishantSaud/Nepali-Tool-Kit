@@ -173,6 +173,5 @@ MIT — free to use, fork, and deploy.
 
 
 ## 📊 Repository Insights & Contributors
-Insights:
 
 ![Repository Metrics](https://gist.githubusercontent.com/obviouslyadesh/98c887b892d59d281473eb7e9b6f8735/raw/github-metrics.svg)
