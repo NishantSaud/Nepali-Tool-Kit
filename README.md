@@ -173,5 +173,5 @@ MIT — free to use, fork, and deploy.
 
 
 ## 📊 Repository Insights & Contributors
-
+Insights:
 ![Repository Metrics](github-metrics.svg)
