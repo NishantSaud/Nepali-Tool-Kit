@@ -105,3 +105,37 @@ CREATE POLICY "service write forex"  ON forex_rates        FOR ALL USING (auth.r
 CREATE POLICY "service write gold"   ON gold_silver_rates  FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "service write health" ON service_health     FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "service write qr"     ON qr_logs            FOR ALL USING (auth.role() = 'service_role');
+
+
+
+-- EMI Calculator logs (optional - for analytics)
+CREATE TABLE IF NOT EXISTS emi_calculations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  loan_amount DECIMAL(12,2) NOT NULL,
+  interest_rate DECIMAL(5,2) NOT NULL,
+  tenure_months INTEGER NOT NULL,
+  emi_amount DECIMAL(12,2) NOT NULL,
+  total_interest DECIMAL(12,2) NOT NULL,
+  total_payment DECIMAL(12,2) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Share calculator logs (optional)
+CREATE TABLE IF NOT EXISTS share_calculations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  buy_price DECIMAL(10,2) NOT NULL,
+  sell_price DECIMAL(10,2) NOT NULL,
+  quantity INTEGER NOT NULL,
+  brokerage_rate DECIMAL(5,2) DEFAULT 0.4,
+  capital_gains_tax DECIMAL(5,2) DEFAULT 7.5,
+  net_profit DECIMAL(12,2) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE emi_calculations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE share_calculations ENABLE ROW LEVEL SECURITY;
+
+-- Create policies (anonymous can insert, only authenticated can read)
+CREATE POLICY "Allow anonymous inserts" ON emi_calculations FOR INSERT WITH CHECK (true);
+CREATE POLICY "Allow anonymous inserts" ON share_calculations FOR INSERT WITH CHECK (true);

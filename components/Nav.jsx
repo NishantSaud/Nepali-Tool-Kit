@@ -9,10 +9,16 @@ const links = [
   { href: '/nrb-rates',     label: 'Forex Rates' },
   { href: '/gold-silver',   label: 'Gold & Silver' },
   { href: '/qr-generator',  label: 'QR Code' },
+  // New tools
+  { href: '/emi-calculator', label: 'EMI' },
+  { href: '/sip-calculator', label: 'SIP' },
+  { href: '/share-calculator', label: 'Share' },
+  { href: '/land-converter', label: 'Land' },
 ];
 
 export default function Nav() {
   const pathname = usePathname();
+  
   return (
     <nav className="nav">
       <div className="nav-inner">

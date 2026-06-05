@@ -1,5 +1,10 @@
 {
   "/page": "app/page.js",
+  "/emi-calculator/page": "app/emi-calculator/page.js",
+  "/qr-generator/page": "app/qr-generator/page.js",
+  "/gold-silver/page": "app/gold-silver/page.js",
   "/date-converter/page": "app/date-converter/page.js",
+  "/api/gold/history/route": "app/api/gold/history/route.js",
+  "/api/forex/route": "app/api/forex/route.js",
   "/nrb-rates/page": "app/nrb-rates/page.js"
 }
