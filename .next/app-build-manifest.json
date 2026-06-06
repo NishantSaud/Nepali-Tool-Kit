@@ -11,15 +11,10 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/emi-calculator/page": [
+    "/nrb-rates/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/emi-calculator/page.js"
-    ],
-    "/qr-generator/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/qr-generator/page.js"
+      "static/chunks/app/nrb-rates/page.js"
     ],
     "/gold-silver/page": [
       "static/chunks/webpack.js",
@@ -30,11 +25,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/date-converter/page.js"
-    ],
-    "/nrb-rates/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/nrb-rates/page.js"
     ]
   }
 }
