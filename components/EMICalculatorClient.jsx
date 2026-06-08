@@ -96,14 +96,14 @@ export default function EMICalculatorClient() {
       <div style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
+        borderRadius: 'var(--radius-2xl)',
         padding: 24,
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
           {/* Inputs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Loan Amount (₹)
               </label>
               <input
@@ -116,14 +116,14 @@ export default function EMICalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>₹1L</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>₹1L</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{formatCurrency(loanAmount)}</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>₹2Cr</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>₹2Cr</span>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Interest Rate (% p.a.)
               </label>
               <input
@@ -136,14 +136,14 @@ export default function EMICalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>5%</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>5%</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{interestRate}%</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>20%</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>20%</span>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Loan Tenure (Years)
               </label>
               <input
@@ -155,9 +155,9 @@ export default function EMICalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>1 year</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>1 year</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{tenureYears} years</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>30 years</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>30 years</span>
               </div>
             </div>
           </div>
@@ -165,26 +165,26 @@ export default function EMICalculatorClient() {
           {/* Results */}
           <div>
             <div style={{
-              background: 'var(--surf2)',
-              borderRadius: 'var(--r-md)',
+              background: 'var(--bg-secondary)',
+              borderRadius: 'var(--radius-md)',
               padding: 20,
             }}>
               <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 4 }}>Monthly EMI</div>
-                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 4 }}>Monthly EMI</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
                   {formatCurrency(emi)}
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
                 <div>
-                  <div style={{ fontSize: '.75rem', color: 'var(--ink3)', marginBottom: 2 }}>Total Interest</div>
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-tertiary)', marginBottom: 2 }}>Total Interest</div>
                   <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#ef4444' }}>
                     {formatCurrency(totalInterest)}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '.75rem', color: 'var(--ink3)', marginBottom: 2 }}>Total Payment</div>
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-tertiary)', marginBottom: 2 }}>Total Payment</div>
                   <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>
                     {formatCurrency(totalPayment)}
                   </div>
@@ -198,7 +198,7 @@ export default function EMICalculatorClient() {
                   <span>Interest: {Math.round(interestPercent)}%</span>
                 </div>
                 <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden' }}>
-                  <div style={{ width: `${principalPercent}%`, background: 'var(--primary)' }} />
+                  <div style={{ width: `${principalPercent}%`, background: 'var(--color-primary)' }} />
                   <div style={{ width: `${interestPercent}%`, background: '#ef4444' }} />
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function EMICalculatorClient() {
         <div style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',
-          borderRadius: 'var(--r-lg)',
+          borderRadius: 'var(--radius-2xl)',
           padding: 24,
         }}>
           <h3 style={{ fontSize: '1.1rem', fontWeight: 500, marginBottom: 16 }}>Yearly Payment Breakdown</h3>
@@ -230,7 +230,7 @@ export default function EMICalculatorClient() {
                 {yearlyBreakdown.map((row) => (
                   <tr key={row.year} style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <td style={{ padding: '10px 8px', fontWeight: 500 }}>{row.year}</td>
-                    <td style={{ textAlign: 'right', padding: '10px 8px', color: 'var(--primary)' }}>
+                    <td style={{ textAlign: 'right', padding: '10px 8px', color: 'var(--color-primary)' }}>
                       {formatCurrency(row.principalPaid)}
                     </td>
                     <td style={{ textAlign: 'right', padding: '10px 8px', color: '#ef4444' }}>

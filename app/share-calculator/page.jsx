@@ -5,6 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import ShareCalculatorClient from '../../components/ShareCalculatorClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 export const revalidate = false;
 
@@ -22,15 +25,12 @@ export const metadata = {
 
 export default function ShareCalculatorPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 07</div>
-        <h2>Share Calculator</h2>
-        <p>
-          Calculate profit or loss on your stock trades including brokerage fees,
-          SEBON fee, CDS fee, DP fee, and capital gains tax.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 07</Badge>}
+        title="Share Calculator"
+        description="Calculate profit or loss on your stock trades including brokerage fees, SEBON fee, CDS fee, DP fee, and capital gains tax."
+      />
 
       <ShareCalculatorClient />
 
@@ -40,11 +40,11 @@ export default function ShareCalculatorPage() {
         <h3 style={{ fontWeight: 500, margin: '24px 0 12px' }}>Brokerage Commission Rates (as per SEBON)</h3>
         <div style={{
           background: 'var(--surface)', border: '1px solid var(--border)',
-          borderRadius: 'var(--r-md)', overflow: 'hidden', marginBottom: 24,
+          borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: 24,
         }}>
           <table style={{ width: '100%', fontSize: '.85rem', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'var(--surf2)', borderBottom: '1px solid var(--border)' }}>
+              <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)' }}>
                 <th style={{ padding: '10px 12px', textAlign: 'left' }}>Transaction Value</th>
                 <th style={{ padding: '10px 12px', textAlign: 'right' }}>Rate</th>
               </tr>
@@ -77,16 +77,16 @@ export default function ShareCalculatorPage() {
           ].map((item) => (
             <div key={item.investor} style={{
               background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--r-md)', padding: '12px',
+              borderRadius: 'var(--radius-md)', padding: '12px',
             }}>
               <div style={{ fontWeight: 500 }}>{item.investor}</div>
-              <div style={{ fontSize: '.9rem', color: 'var(--primary)', marginTop: 4 }}>{item.rate}</div>
+              <div style={{ fontSize: '.9rem', color: 'var(--color-primary)', marginTop: 4 }}>{item.rate}</div>
             </div>
           ))}
         </div>
 
         <div style={{
-          background: 'var(--surf2)', borderRadius: 'var(--r-md)', padding: 20,
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: 20,
         }}>
           <h3 style={{ fontWeight: 500, marginTop: 0, marginBottom: 8 }}>💰 Additional Fees</h3>
           <ul style={{ margin: 0, paddingLeft: 20, fontSize: '.9rem' }}>
@@ -96,6 +96,6 @@ export default function ShareCalculatorPage() {
           </ul>
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

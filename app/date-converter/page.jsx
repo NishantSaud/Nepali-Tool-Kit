@@ -5,6 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import DateConverterClient from '../../components/DateConverterClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 // Static page — no revalidation needed (pure client logic)
 export const revalidate = false;
@@ -23,15 +26,12 @@ export const metadata = {
 
 export default function DateConverterPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 01</div>
-        <h2>Date Converter</h2>
-        <p>
-          Convert between Bikram Sambat (BS) and Gregorian (AD) instantly.
-          No server required — all conversions run locally in your browser.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 01</Badge>}
+        title="Date Converter"
+        description="Convert between Bikram Sambat (BS) and Gregorian (AD) instantly. No server required — all conversions run locally in your browser."
+      />
 
       {/* CLIENT COMPONENT — handles all interactive state */}
       <DateConverterClient />
@@ -41,7 +41,7 @@ export default function DateConverterPage() {
         <h3 style={{ fontWeight: 500, marginBottom: 12 }}>About the Bikram Sambat Calendar</h3>
         <p style={{ fontSize: '.9rem', marginBottom: 10 }}>
           Bikram Sambat (BS), also known as the Vikram Samvat, is Nepal's official national calendar.
-          It runs <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>approximately 56 years and 8.5
+          It runs <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>approximately 56 years and 8.5
           months ahead</strong> of the Gregorian calendar. The new year (1 Baisakh) typically falls in
           mid-April AD.
         </p>
@@ -49,11 +49,11 @@ export default function DateConverterPage() {
           The BS year has 12 months, but unlike the Gregorian calendar, the number of days in each month
           is not fixed — it varies between 29 and 32 days and is determined by astronomical calculations
           each year. This converter uses a pre-computed lookup table covering{' '}
-          <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>2000 BS to 2084 BS</strong>.
+          <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>2000 BS to 2084 BS</strong>.
         </p>
         <p style={{ fontSize: '.9rem' }}>
           The npm package used internally is{' '}
-          <code style={{ fontFamily: 'var(--font-mono)', fontSize: '.82rem', background: 'var(--surf3)', padding: '2px 6px', borderRadius: 4 }}>
+          <code style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', background: 'var(--bg-tertiary)', padding: '2px 6px', borderRadius: 4 }}>
             @remotemerge/nepali-date-converter
           </code>.
         </p>
@@ -71,15 +71,15 @@ export default function DateConverterPage() {
           ].map(([n, name]) => (
             <div key={n} style={{
               background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--r-sm)', padding: '8px 12px',
+              borderRadius: 'var(--radius-md)', padding: '8px 12px',
               fontSize: '.82rem',
             }}>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--ink4)', marginRight: 6 }}>{n}.</span>
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginRight: 6 }}>{n}.</span>
               {name}
             </div>
           ))}
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

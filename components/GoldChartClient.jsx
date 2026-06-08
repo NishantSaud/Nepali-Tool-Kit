@@ -71,12 +71,12 @@ export default function GoldChartClient({ metal = 'gold', initialHistory = [] })
         <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
         <XAxis 
           dataKey="date" 
-          stroke="var(--ink-3)"
+          stroke="var(--text-tertiary)"
           tick={{ fontSize: 12 }}
           interval="preserveStartEnd"
         />
         <YAxis 
-          stroke="var(--ink-3)"
+          stroke="var(--text-tertiary)"
           tick={{ fontSize: 12 }}
           tickFormatter={(value) => `₨${value.toLocaleString()}`}
         />

@@ -5,6 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import EMICalculatorClient from '../../components/EMICalculatorClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 export const revalidate = false;
 
@@ -22,15 +25,12 @@ export const metadata = {
 
 export default function EMICalculatorPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 05</div>
-        <h2>EMI Calculator</h2>
-        <p>
-          Calculate your monthly loan installments for home loans, vehicle loans,
-          or personal loans. Get a complete breakdown of principal and interest.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 05</Badge>}
+        title="EMI Calculator"
+        description="Calculate your monthly loan installments for home loans, vehicle loans, or personal loans. Get a complete breakdown of principal and interest."
+      />
 
       <EMICalculatorClient />
 
@@ -39,7 +39,7 @@ export default function EMICalculatorPage() {
         <p style={{ fontSize: '.9rem', marginBottom: 10 }}>
           Equated Monthly Installment (EMI) is the fixed amount you pay to financial institutions
           each month until your loan is fully repaid. In Nepal, banks and finance companies use
-          the <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>reducing balance method</strong> to calculate EMI.
+          the <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>reducing balance method</strong> to calculate EMI.
         </p>
         <p style={{ fontSize: '.9rem', marginBottom: 10 }}>
           <strong>EMI Formula:</strong> EMI = P × r × (1 + r)<sup>n</sup> / ((1 + r)<sup>n</sup> - 1)
@@ -59,10 +59,10 @@ export default function EMICalculatorPage() {
           ].map((item) => (
             <div key={item.type} style={{
               background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--r-md)', padding: '12px',
+              borderRadius: 'var(--radius-md)', padding: '12px',
             }}>
               <div style={{ fontWeight: 500 }}>{item.type}</div>
-              <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginTop: 4 }}>
+              <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginTop: 4 }}>
                 {item.rate} • {item.tenure}
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function EMICalculatorPage() {
         </div>
 
         <div style={{
-          background: 'var(--surf2)', borderRadius: 'var(--r-md)', padding: 20, marginTop: 32,
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: 20, marginTop: 32,
         }}>
           <h3 style={{ fontWeight: 500, marginTop: 0, marginBottom: 8 }}>💡 Tips for Lower EMI</h3>
           <ul style={{ margin: 0, paddingLeft: 20, fontSize: '.9rem' }}>
@@ -81,6 +81,6 @@ export default function EMICalculatorPage() {
           </ul>
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

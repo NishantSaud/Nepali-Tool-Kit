@@ -84,14 +84,14 @@ export default function ShareCalculatorClient() {
       <div style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
+        borderRadius: 'var(--radius-2xl)',
         padding: 24,
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
           {/* Inputs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Buy Price (₹ per share)
               </label>
               <input
@@ -100,14 +100,14 @@ export default function ShareCalculatorClient() {
                 onChange={(e) => setBuyPrice(Number(e.target.value))}
                 style={{
                   width: '100%', padding: '10px 12px',
-                  background: 'var(--surf2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                 }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Sell Price (₹ per share)
               </label>
               <input
@@ -116,14 +116,14 @@ export default function ShareCalculatorClient() {
                 onChange={(e) => setSellPrice(Number(e.target.value))}
                 style={{
                   width: '100%', padding: '10px 12px',
-                  background: 'var(--surf2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                 }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Quantity (Kitta)
               </label>
               <input
@@ -132,14 +132,14 @@ export default function ShareCalculatorClient() {
                 onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
                 style={{
                   width: '100%', padding: '10px 12px',
-                  background: 'var(--surf2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                 }}
               />
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Brokerage Rate (%)
               </label>
               <select
@@ -147,8 +147,8 @@ export default function ShareCalculatorClient() {
                 onChange={(e) => setBrokerageRate(Number(e.target.value))}
                 style={{
                   width: '100%', padding: '10px 12px',
-                  background: 'var(--surf2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                 }}
               >
                 <option value={0.27}>Above ₹30L - 0.27%</option>
@@ -160,7 +160,7 @@ export default function ShareCalculatorClient() {
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 DP Fee (₹)
               </label>
               <input
@@ -169,8 +169,8 @@ export default function ShareCalculatorClient() {
                 onChange={(e) => setDpFee(Number(e.target.value))}
                 style={{
                   width: '100%', padding: '10px 12px',
-                  background: 'var(--surf2)', border: '1px solid var(--border)',
-                  borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                 }}
               />
             </div>
@@ -179,12 +179,12 @@ export default function ShareCalculatorClient() {
           {/* Results */}
           <div>
             <div style={{
-              background: 'var(--surf2)',
-              borderRadius: 'var(--r-md)',
+              background: 'var(--bg-secondary)',
+              borderRadius: 'var(--radius-md)',
               padding: 20,
             }}>
               <div style={{ marginBottom: 20, textAlign: 'center' }}>
-                <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 4 }}>Net Profit / Loss</div>
+                <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 4 }}>Net Profit / Loss</div>
                 <div style={{
                   fontSize: '2rem', fontWeight: 700,
                   color: isProfit ? '#10b981' : '#ef4444',
@@ -192,34 +192,34 @@ export default function ShareCalculatorClient() {
                   {formatCurrency(Math.abs(netProfit))}
                   <span style={{ fontSize: '1rem', marginLeft: 4 }}>{isProfit ? 'profit' : 'loss'}</span>
                 </div>
-                <div style={{ fontSize: '.85rem', color: 'var(--ink3)', marginTop: 4 }}>
+                <div style={{ fontSize: '.85rem', color: 'var(--text-tertiary)', marginTop: 4 }}>
                   Return: {returnPercentage > 0 ? '+' : ''}{returnPercentage.toFixed(2)}%
                 </div>
               </div>
 
               <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>Total Investment</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>Total Investment</span>
                   <span style={{ fontWeight: 500 }}>{formatCurrency(investment)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>Gross Profit</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>Gross Profit</span>
                   <span style={{ fontWeight: 500, color: '#10b981' }}>{formatCurrency(grossProfit)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>Total Brokerage</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>Total Brokerage</span>
                   <span>{formatCurrency(totalBrokerage)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>SEBON + CDS Fee</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>SEBON + CDS Fee</span>
                   <span>{formatCurrency(sebonFee + cdsFee)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>DP Fee</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>DP Fee</span>
                   <span>{formatCurrency(dpFee)}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, borderTop: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>Capital Gains Tax (7.5%)</span>
+                  <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>Capital Gains Tax (7.5%)</span>
                   <span style={{ color: '#ef4444' }}>{formatCurrency(taxAmount)}</span>
                 </div>
               </div>

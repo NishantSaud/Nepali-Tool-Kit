@@ -1,6 +1,3 @@
 {
-  "/page": "app/page.js",
-  "/gold-silver/page": "app/gold-silver/page.js",
-  "/nrb-rates/page": "app/nrb-rates/page.js",
-  "/date-converter/page": "app/date-converter/page.js"
+  "/page": "app/page.js"
 }

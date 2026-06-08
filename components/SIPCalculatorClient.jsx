@@ -77,14 +77,14 @@ export default function SIPCalculatorClient() {
       <div style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
+        borderRadius: 'var(--radius-2xl)',
         padding: 24,
       }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
           {/* Inputs */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Monthly Investment (₹)
               </label>
               <input
@@ -97,14 +97,14 @@ export default function SIPCalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>₹500</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>₹500</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{formatCurrency(monthlyInvestment)}</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>₹1L</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>₹1L</span>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Expected Return (% p.a.)
               </label>
               <input
@@ -117,14 +117,14 @@ export default function SIPCalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>4%</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>4%</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{expectedReturn}%</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>20%</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>20%</span>
               </div>
             </div>
 
             <div>
-              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--ink2)' }}>
+              <label style={{ display: 'block', fontSize: '.85rem', fontWeight: 500, marginBottom: 8, color: 'var(--text-secondary)' }}>
                 Time Period (Years)
               </label>
               <input
@@ -136,9 +136,9 @@ export default function SIPCalculatorClient() {
                 style={{ width: '100%' }}
               />
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>1 year</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>1 year</span>
                 <span style={{ fontSize: '.9rem', fontWeight: 600 }}>{timePeriod} years</span>
-                <span style={{ fontSize: '.8rem', color: 'var(--ink3)' }}>30 years</span>
+                <span style={{ fontSize: '.8rem', color: 'var(--text-tertiary)' }}>30 years</span>
               </div>
             </div>
           </div>
@@ -146,26 +146,26 @@ export default function SIPCalculatorClient() {
           {/* Results */}
           <div>
             <div style={{
-              background: 'var(--surf2)',
-              borderRadius: 'var(--r-md)',
+              background: 'var(--bg-secondary)',
+              borderRadius: 'var(--radius-md)',
               padding: 20,
             }}>
               <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 4 }}>Total Value</div>
-                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+                <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 4 }}>Total Value</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
                   {formatCurrency(totalValue)}
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
                 <div>
-                  <div style={{ fontSize: '.75rem', color: 'var(--ink3)', marginBottom: 2 }}>Total Investment</div>
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-tertiary)', marginBottom: 2 }}>Total Investment</div>
                   <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>
                     {formatCurrency(totalInvestment)}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '.75rem', color: 'var(--ink3)', marginBottom: 2 }}>Estimated Returns</div>
+                  <div style={{ fontSize: '.75rem', color: 'var(--text-tertiary)', marginBottom: 2 }}>Estimated Returns</div>
                   <div style={{ fontSize: '1.1rem', fontWeight: 600, color: '#10b981' }}>
                     {formatCurrency(estimatedReturns)}
                   </div>
@@ -179,7 +179,7 @@ export default function SIPCalculatorClient() {
                   <span>Returns: {Math.round(returnsPercent)}%</span>
                 </div>
                 <div style={{ display: 'flex', height: 8, borderRadius: 4, overflow: 'hidden' }}>
-                  <div style={{ width: `${totalPercent}%`, background: 'var(--primary)' }} />
+                  <div style={{ width: `${totalPercent}%`, background: 'var(--color-primary)' }} />
                   <div style={{ width: `${returnsPercent}%`, background: '#10b981' }} />
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function SIPCalculatorClient() {
         <div style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',
-          borderRadius: 'var(--r-lg)',
+          borderRadius: 'var(--radius-2xl)',
           padding: 24,
         }}>
           <h3 style={{ fontSize: '1.1rem', fontWeight: 500, marginBottom: 16 }}>Year-by-Year Growth</h3>

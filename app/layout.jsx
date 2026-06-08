@@ -1,35 +1,24 @@
-// frontend/app/layout.jsx
+// app/layout.jsx
 // ─────────────────────────────────────────────────────────────
-// Root layout — wraps every page with Nav, fonts, SEO metadata
+// Root layout — Geist font, dark mode, Nav + Footer
 // ─────────────────────────────────────────────────────────────
 
-import { DM_Sans, DM_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import Nav from '../components/Nav';
+import Footer from '../components/Footer';
+import ThemeProvider from '../components/ThemeProvider';
 import './globals.css';
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const dmMono = DM_Mono({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 // ── Default metadata (overridden per-page) ───────────────────
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.nepaltoolkit.com'),
   title: {
-    default: 'NepalToolkit — NRB Forex Rates, Date Converter, Gold Price & QR Generator',
+    default: 'NepalToolkit — Essential Tools for Nepal',
     template: '%s | NepalToolkit',
   },
   description:
-    'Free tools for Nepal: live NRB exchange rates, Bikram Sambat date converter, gold & silver prices from FNGOSDA, and QR code generator. Updated daily.',
+    'Free tools for Nepal: live NRB exchange rates, Bikram Sambat date converter, gold & silver prices, QR code generator, financial calculators, and land unit converter.',
   keywords: [
     'NRB exchange rate today',
     'Nepal forex rate',
@@ -40,24 +29,26 @@ export const metadata = {
     'suno ko bhaau nepal',
     'QR code generator Nepal',
     'dollar rate nepal today',
+    'EMI calculator Nepal',
+    'SIP calculator Nepal',
   ],
   openGraph: {
-    type:        'website',
-    locale:      'en_NP',
-    url:         'https://www.nepaltoolkit.com',
-    siteName:    'NepalToolkit',
-    title:       'NepalToolkit — Free Tools for Nepal',
-    description: 'NRB forex rates, date converter, gold prices & QR code — all in one place.',
+    type: 'website',
+    locale: 'en_NP',
+    url: 'https://www.nepaltoolkit.com',
+    siteName: 'NepalToolkit',
+    title: 'NepalToolkit — Essential Tools for Nepal',
+    description: 'Exchange rates, date converter, gold prices, calculators & more — all in one place.',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'NepalToolkit' }],
   },
   twitter: {
-    card:        'summary_large_image',
-    title:       'NepalToolkit — Free Tools for Nepal',
-    description: 'NRB forex rates, BS/AD date converter, gold & silver prices, QR generator.',
-    images:      ['/og-image.png'],
+    card: 'summary_large_image',
+    title: 'NepalToolkit — Essential Tools for Nepal',
+    description: 'Exchange rates, date converter, gold prices, calculators & more.',
+    images: ['/og-image.png'],
   },
   robots: {
-    index:  true,
+    index: true,
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
@@ -68,23 +59,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body>
-        <Nav />
-        <main>{children}</main>
-        <footer style={{
-          borderTop: '1px solid var(--border)',
-          background: 'var(--surface)',
-          padding: '32px 24px',
-          textAlign: 'center',
-          fontSize: '.82rem',
-          color: 'var(--ink4)',
-        }}>
-          <strong style={{ color: 'var(--ink2)', fontWeight: 500 }}>NepalToolkit</strong>
-          &nbsp;·&nbsp; Data: NRB, FNGOSDA
-          &nbsp;·&nbsp; Built with Next.js + Supabase
-          &nbsp;·&nbsp; Free for everyone
-        </footer>
+        <ThemeProvider>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

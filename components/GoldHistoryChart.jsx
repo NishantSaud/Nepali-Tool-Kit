@@ -81,7 +81,7 @@ export default function GoldHistoryChart({ metal = 'gold', priceType = 'hallmark
         gap: '16px'
       }}>
         <div className="dot dot-ok" style={{ width: '12px', height: '12px' }}></div>
-        <p style={{ color: 'var(--ink-3)' }}>Loading {metal} price history...</p>
+        <p style={{ color: 'var(--text-tertiary)' }}>Loading {metal} price history...</p>
       </div>
     );
   }
@@ -152,13 +152,13 @@ export default function GoldHistoryChart({ metal = 'gold', priceType = 'hallmark
           <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
           <XAxis 
             dataKey="date" 
-            stroke="var(--ink-3)"
+            stroke="var(--text-tertiary)"
             tick={{ fontSize: 11 }}
             tickFormatter={formatDate}
             interval="preserveStartEnd"
           />
           <YAxis 
-            stroke="var(--ink-3)"
+            stroke="var(--text-tertiary)"
             tick={{ fontSize: 11 }}
             tickFormatter={formatPrice}
             domain={['auto', 'auto']}
@@ -217,8 +217,8 @@ export default function GoldHistoryChart({ metal = 'gold', priceType = 'hallmark
         marginTop: '16px', 
         fontSize: '0.7rem', 
         textAlign: 'center',
-        color: 'var(--ink-4)',
-        borderTop: '1px solid var(--border-2)',
+        color: 'var(--text-muted)',
+        borderTop: '1px solid var(--border-light)',
         paddingTop: '12px'
       }}>
         <span>💰 Prices include import duty, GST (13%), and dealer margins</span>

@@ -3,6 +3,9 @@
 // QR Code Generator — pure client-side, zero API dependency
 // ─────────────────────────────────────────────────────────────
 import QRGeneratorClient from '../../components/QRGeneratorClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 export const revalidate = false; // static — no server data needed
 
@@ -20,15 +23,12 @@ export const metadata = {
 
 export default function QRGeneratorPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 04</div>
-        <h2>QR Code Generator</h2>
-        <p>
-          Generate QR codes for any URL, text, phone, or email — instantly, with no account required.
-          All processing happens in your browser.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 04</Badge>}
+        title="QR Code Generator"
+        description="Generate QR codes for any URL, text, phone, or email — instantly, with no account required. All processing happens in your browser."
+      />
 
       <QRGeneratorClient />
 
@@ -39,8 +39,8 @@ export default function QRGeneratorPage() {
           { step: '02', title: 'Customise',     desc: 'Choose the output size (128–1024px), error correction level, and color.' },
           { step: '03', title: 'Download',      desc: 'Click Download PNG to save a high-resolution QR code ready to print or share.' },
         ].map(({ step, title, desc }) => (
-          <div key={step} style={{ padding: '20px 22px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)' }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', letterSpacing: '.08em', color: 'var(--ink4)', marginBottom: 8 }}>STEP {step}</div>
+          <div key={step} style={{ padding: '20px 22px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '.72rem', letterSpacing: '.08em', color: 'var(--text-muted)', marginBottom: 8 }}>STEP {step}</div>
             <h3 style={{ fontSize: '1rem', fontWeight: 500, marginBottom: 6 }}>{title}</h3>
             <p style={{ fontSize: '.85rem' }}>{desc}</p>
           </div>
@@ -53,11 +53,11 @@ export default function QRGeneratorPage() {
         <p style={{ fontSize: '.9rem', marginBottom: 10 }}>
           QR codes support four levels of error correction, allowing them to remain readable even if
           part of the code is damaged or obscured.{' '}
-          <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>Low (7%)</strong> fits more data;{' '}
-          <strong style={{ color: 'var(--ink)', fontWeight: 500 }}>High (30%)</strong> makes the code
+          <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Low (7%)</strong> fits more data;{' '}
+          <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>High (30%)</strong> makes the code
           more robust. For printed materials or codes with a logo overlay, use Quartile or High.
         </p>
       </section>
-    </div>
+    </Container>
   );
 }

@@ -97,14 +97,14 @@ export default function LandConverterClient() {
       <div style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
+        borderRadius: 'var(--radius-2xl)',
         padding: 24,
       }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 500, marginBottom: 20 }}>Quick Conversion</h3>
         
         <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 16, alignItems: 'center' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 6 }}>
+            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 6 }}>
               Value
             </label>
             <input
@@ -113,14 +113,14 @@ export default function LandConverterClient() {
               onChange={(e) => setValue(parseFloat(e.target.value) || 0)}
               style={{
                 width: '100%', padding: '10px 12px',
-                background: 'var(--surf2)', border: '1px solid var(--border)',
-                borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
               }}
             />
           </div>
           
           <div>
-            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 6 }}>
+            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 6 }}>
               From
             </label>
             <select
@@ -128,8 +128,8 @@ export default function LandConverterClient() {
               onChange={(e) => setFromUnit(e.target.value)}
               style={{
                 width: '100%', padding: '10px 12px',
-                background: 'var(--surf2)', border: '1px solid var(--border)',
-                borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
               }}
             >
               {units.map(unit => (
@@ -144,8 +144,8 @@ export default function LandConverterClient() {
             <button
               onClick={swapUnits}
               style={{
-                padding: '10px', background: 'var(--surf2)', border: '1px solid var(--border)',
-                borderRadius: 'var(--r-full)', cursor: 'pointer',
+                padding: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-full)', cursor: 'pointer',
               }}
             >
               ↔
@@ -153,7 +153,7 @@ export default function LandConverterClient() {
           </div>
           
           <div>
-            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 6 }}>
+            <label style={{ display: 'block', fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 6 }}>
               To
             </label>
             <select
@@ -161,8 +161,8 @@ export default function LandConverterClient() {
               onChange={(e) => setToUnit(e.target.value)}
               style={{
                 width: '100%', padding: '10px 12px',
-                background: 'var(--surf2)', border: '1px solid var(--border)',
-                borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+          background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+          borderRadius: 'var(--radius-md)', fontSize: '.9rem',
               }}
             >
               {units.map(unit => (
@@ -175,13 +175,13 @@ export default function LandConverterClient() {
         </div>
         
         <div style={{
-          background: 'var(--surf2)', borderRadius: 'var(--r-md)',
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)',
           padding: 20, textAlign: 'center', marginTop: 24,
         }}>
-          <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginBottom: 4 }}>
+          <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginBottom: 4 }}>
             {value} {getUnitSymbol(fromUnit)} =
           </div>
-          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--primary)' }}>
+          <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-primary)' }}>
             {formatNumber(result)} {getUnitSymbol(toUnit)}
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function LandConverterClient() {
       <div style={{
         background: 'var(--surface)',
         border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)',
+        borderRadius: 'var(--radius-2xl)',
         padding: 24,
       }}>
         <h3 style={{ fontSize: '1rem', fontWeight: 500, marginBottom: 20 }}>
@@ -204,7 +204,7 @@ export default function LandConverterClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {['ropani', 'aana', 'paisa', 'daam'].map((unit) => (
                 <div key={unit}>
-                  <label style={{ fontSize: '.75rem', color: 'var(--ink3)' }}>
+                  <label style={{ fontSize: '.75rem', color: 'var(--text-tertiary)' }}>
                     {unit.charAt(0).toUpperCase() + unit.slice(1)}
                   </label>
                   <input
@@ -213,8 +213,8 @@ export default function LandConverterClient() {
                     onChange={(e) => handleFullUnitChange(unit, e.target.value)}
                     style={{
                       width: '100%', padding: '10px 12px', marginTop: 4,
-                      background: 'var(--surf2)', border: '1px solid var(--border)',
-                      borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+                      background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                     }}
                     min="0"
                   />
@@ -228,7 +228,7 @@ export default function LandConverterClient() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {['ropani', 'aana', 'paisa', 'daam'].map((unit) => (
                 <div key={unit}>
-                  <label style={{ fontSize: '.75rem', color: 'var(--ink3)' }}>
+                  <label style={{ fontSize: '.75rem', color: 'var(--text-tertiary)' }}>
                     {unit.charAt(0).toUpperCase() + unit.slice(1)}
                   </label>
                   <input
@@ -237,8 +237,8 @@ export default function LandConverterClient() {
                     readOnly
                     style={{
                       width: '100%', padding: '10px 12px', marginTop: 4,
-                      background: 'var(--surf2)', border: '1px solid var(--border)',
-                      borderRadius: 'var(--r-sm)', fontSize: '.9rem',
+                      background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+                      borderRadius: 'var(--radius-md)', fontSize: '.9rem',
                       fontFamily: 'var(--font-mono)',
                     }}
                   />
@@ -250,10 +250,10 @@ export default function LandConverterClient() {
         
         <div style={{
           marginTop: 20, padding: 12,
-          background: 'var(--surf2)', borderRadius: 'var(--r-sm)',
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-sm)',
           textAlign: 'center',
         }}>
-          <span style={{ fontSize: '.85rem', color: 'var(--ink3)' }}>Total Area: </span>
+          <span style={{ fontSize: '.85rem', color: 'var(--text-tertiary)' }}>Total Area: </span>
           <strong>
             {toFull.ropani}.{toFull.aana}{toFull.paisa ? `.${toFull.paisa}` : ''}{toFull.daam ? `.${toFull.daam}` : ''} Ropani
           </strong>

@@ -5,6 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import SIPCalculatorClient from '../../components/SIPCalculatorClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 export const revalidate = false;
 
@@ -22,15 +25,12 @@ export const metadata = {
 
 export default function SIPCalculatorPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 06</div>
-        <h2>SIP Calculator</h2>
-        <p>
-          Calculate returns on your systematic investment plans in mutual funds.
-          See how compounding grows your wealth over time.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 06</Badge>}
+        title="SIP Calculator"
+        description="Calculate returns on your systematic investment plans in mutual funds. See how compounding grows your wealth over time."
+      />
 
       <SIPCalculatorClient />
 
@@ -55,10 +55,10 @@ export default function SIPCalculatorPage() {
           ].map((item) => (
             <div key={item.name} style={{
               background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--r-md)', padding: '12px',
+              borderRadius: 'var(--radius-md)', padding: '12px',
             }}>
               <div style={{ fontWeight: 500 }}>{item.name}</div>
-              <div style={{ fontSize: '.8rem', color: 'var(--ink3)', marginTop: 4 }}>
+              <div style={{ fontSize: '.8rem', color: 'var(--text-tertiary)', marginTop: 4 }}>
                 Returns: {item.returns} • Risk: {item.risk}
               </div>
             </div>
@@ -66,7 +66,7 @@ export default function SIPCalculatorPage() {
         </div>
 
         <div style={{
-          background: 'var(--surf2)', borderRadius: 'var(--r-md)', padding: 20, marginTop: 32,
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: 20, marginTop: 32,
         }}>
           <h3 style={{ fontWeight: 500, marginTop: 0, marginBottom: 8 }}>📈 Power of Compounding</h3>
           <p style={{ fontSize: '.9rem', margin: 0 }}>
@@ -75,6 +75,6 @@ export default function SIPCalculatorPage() {
           </p>
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

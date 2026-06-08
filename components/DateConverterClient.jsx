@@ -156,7 +156,7 @@ export default function DateConverterClient() {
   return (
     <div style={{ maxWidth: 620 }}>
       {/* MODE TABS */}
-      <div style={{ display: 'flex', gap: 0, background: 'var(--surf2)', border: '1px solid var(--border)', borderRadius: 'var(--r-sm)', padding: 3, width: 'fit-content', marginBottom: 28 }}>
+      <div style={{ display: 'flex', gap: 0, background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: 3, width: 'fit-content', marginBottom: 28 }}>
         {[['bs2ad','BS → AD'],['ad2bs','AD → BS']].map(([m, label]) => (
           <button key={m} onClick={() => { setMode(m); setInput(''); setResult(null); setError(''); }}
             style={{
@@ -164,7 +164,7 @@ export default function DateConverterClient() {
               background: mode === m ? 'var(--surface)' : 'transparent',
               borderRadius: 6,
               fontFamily: 'var(--font-sans)', fontSize: '.875rem', fontWeight: 500,
-              cursor: 'pointer', color: mode === m ? 'var(--ink)' : 'var(--ink3)',
+              cursor: 'pointer', color: mode === m ? 'var(--text-primary)' : 'var(--text-tertiary)',
               boxShadow: mode === m ? 'var(--shadow-sm)' : 'none',
               transition: 'all var(--dur)',
             }}>
@@ -188,29 +188,29 @@ export default function DateConverterClient() {
             />
           </div>
           <button onClick={toggleMode} title="Swap direction"
-            style={{ width: 38, height: 38, background: 'none', border: '1px solid var(--border)', borderRadius: '50%', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--ink2)', transition: 'all var(--dur)', marginBottom: 1 }}>
+            style={{ width: 38, height: 38, background: 'none', border: '1px solid var(--border)', borderRadius: '50%', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--text-secondary)', transition: 'all var(--dur)', marginBottom: 1 }}>
             ⇄
           </button>
           <div>
             <div className="tool-label">{mode === 'bs2ad' ? 'Gregorian (AD)' : 'Bikram Sambat (BS)'}</div>
-            <div style={{ marginTop: 6, height: 44, display: 'flex', alignItems: 'center', padding: '0 14px', background: 'var(--surf2)', border: '1px solid var(--border2)', borderRadius: 'var(--r-sm)', fontFamily: 'var(--font-mono)', fontSize: '.95rem', color: result ? 'var(--ink)' : 'var(--ink4)' }}>
+            <div style={{ marginTop: 6, height: 44, display: 'flex', alignItems: 'center', padding: '0 14px', background: 'var(--bg-secondary)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-mono)', fontSize: '.95rem', color: result ? 'var(--text-primary)' : 'var(--text-muted)' }}>
               {result ? result.raw : '—'}
             </div>
           </div>
         </div>
 
-        {error && <div style={{ fontSize: '.82rem', color: 'var(--red)', marginBottom: 16 }}>{error}</div>}
+        {error && <div style={{ fontSize: '.82rem', color: 'var(--color-error)', marginBottom: 16 }}>{error}</div>}
 
         {/* RESULT CARD */}
         {result && (
-          <div style={{ marginTop: 20, padding: 24, background: 'var(--surf2)', borderRadius: 'var(--r-md)', textAlign: 'center', border: '1px solid var(--border2)' }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(1.4rem,4vw,2rem)', fontWeight: 300, color: 'var(--ink)', letterSpacing: '-.02em' }}>
+          <div style={{ marginTop: 20, padding: 24, background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', textAlign: 'center', border: '1px solid var(--border-light)' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(1.4rem,4vw,2rem)', fontWeight: 300, color: 'var(--text-primary)', letterSpacing: '-.02em' }}>
               {result.display}
             </div>
-            <div style={{ fontSize: '.75rem', letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink4)', marginTop: 6 }}>
+            <div style={{ fontSize: '.75rem', letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--text-muted)', marginTop: 6 }}>
               {result.label}
             </div>
-            <div style={{ fontSize: '.9rem', color: 'var(--ink3)', marginTop: 6 }}>{result.weekday}</div>
+            <div style={{ fontSize: '.9rem', color: 'var(--text-tertiary)', marginTop: 6 }}>{result.weekday}</div>
 
             {/* AGE */}
             {getAge(result.adDate) && (() => {
@@ -218,9 +218,9 @@ export default function DateConverterClient() {
               return (
                 <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 16 }}>
                   {[['Years', yrs], ['Months', mos], ['Days', days]].map(([lbl, val]) => (
-                    <div key={lbl} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--r-md)', padding: '10px 18px', textAlign: 'center' }}>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.15rem', fontWeight: 400, color: 'var(--ink)' }}>{val}</div>
-                      <div style={{ fontSize: '.68rem', color: 'var(--ink4)', textTransform: 'uppercase', letterSpacing: '.05em', marginTop: 2 }}>{lbl}</div>
+                    <div key={lbl} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '10px 18px', textAlign: 'center' }}>
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.15rem', fontWeight: 400, color: 'var(--text-primary)' }}>{val}</div>
+                      <div style={{ fontSize: '.68rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.05em', marginTop: 2 }}>{lbl}</div>
                     </div>
                   ))}
                 </div>

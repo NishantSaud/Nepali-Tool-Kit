@@ -5,6 +5,9 @@
 // ─────────────────────────────────────────────────────────────
 
 import LandConverterClient from '../../components/LandConverterClient';
+import PageHeader from '../../components/ui/PageHeader';
+import Container from '../../components/ui/Container';
+import Badge from '../../components/ui/Badge';
 
 export const revalidate = false;
 
@@ -22,15 +25,12 @@ export const metadata = {
 
 export default function LandConverterPage() {
   return (
-    <div className="page" style={{ paddingTop: 0 }}>
-      <div className="page-header">
-        <div className="eyebrow">Tool 08</div>
-        <h2>Land Unit Converter</h2>
-        <p>
-          Convert between traditional Nepali land measurement units and metric units.
-          Supports Ropani-Aana-Paisa-Daam system and Bigha-Kattha-Dhur system.
-        </p>
-      </div>
+    <Container>
+      <PageHeader
+        eyebrow={<Badge variant="primary">Tool 08</Badge>}
+        title="Land Unit Converter"
+        description="Convert between traditional Nepali land measurement units and metric units. Supports Ropani-Aana-Paisa-Daam system and Bigha-Kattha-Dhur system."
+      />
 
       <LandConverterClient />
 
@@ -39,11 +39,11 @@ export default function LandConverterPage() {
         
         <div style={{
           background: 'var(--surface)', border: '1px solid var(--border)',
-          borderRadius: 'var(--r-md)', overflow: 'hidden', marginBottom: 24,
+          borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: 24,
         }}>
           <table style={{ width: '100%', fontSize: '.85rem', borderCollapse: 'collapse' }}>
             <thead>
-              <tr style={{ background: 'var(--surf2)', borderBottom: '1px solid var(--border)' }}>
+              <tr style={{ background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)' }}>
                 <th style={{ padding: '10px 12px', textAlign: 'left' }}>Unit</th>
                 <th style={{ padding: '10px 12px', textAlign: 'right' }}>Square Feet</th>
                 <th style={{ padding: '10px 12px', textAlign: 'right' }}>Square Meters</th>
@@ -82,7 +82,7 @@ export default function LandConverterPage() {
           ].map((relation) => (
             <div key={relation} style={{
               background: 'var(--surface)', border: '1px solid var(--border)',
-              borderRadius: 'var(--r-md)', padding: '10px 12px', textAlign: 'center',
+              borderRadius: 'var(--radius-md)', padding: '10px 12px', textAlign: 'center',
             }}>
               {relation}
             </div>
@@ -90,7 +90,7 @@ export default function LandConverterPage() {
         </div>
 
         <div style={{
-          background: 'var(--surf2)', borderRadius: 'var(--r-md)', padding: 20,
+          background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: 20,
         }}>
           <h3 style={{ fontWeight: 500, marginTop: 0, marginBottom: 8 }}>📋 Tips for Land Transactions</h3>
           <ul style={{ margin: 0, paddingLeft: 20, fontSize: '.9rem' }}>
@@ -101,6 +101,6 @@ export default function LandConverterPage() {
           </ul>
         </div>
       </section>
-    </div>
+    </Container>
   );
 }

@@ -78,7 +78,7 @@ export default function QRGeneratorClient() {
           style={{ fontSize: '.9rem', resize: 'vertical', minHeight: 80, width: '100%' }}
         />
         {raw && (
-          <div style={{ fontSize: '.75rem', color: 'var(--ink4)', marginTop: 4 }}>
+          <div style={{ fontSize: '.75rem', color: 'var(--text-muted)', marginTop: 4 }}>
             {raw.length} characters
           </div>
         )}
@@ -120,8 +120,8 @@ export default function QRGeneratorClient() {
 
       {/* ── PREVIEW ── */}
       <div style={{
-        background: 'var(--surf2)', border: '1px solid var(--border)',
-        borderRadius: 'var(--r-lg)', padding: 24,
+        background: 'var(--bg-secondary)', border: '1px solid var(--border)',
+        borderRadius: 'var(--radius-2xl)', padding: 24,
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         gap: 14, minHeight: 260, justifyContent: 'center',
       }}>
@@ -136,12 +136,12 @@ export default function QRGeneratorClient() {
                 bgColor="#ffffff"
               />
             </div>
-            <div style={{ fontSize: '.75rem', color: 'var(--ink4)', textAlign: 'center', wordBreak: 'break-all', maxWidth: 220 }}>
+            <div style={{ fontSize: '.75rem', color: 'var(--text-muted)', textAlign: 'center', wordBreak: 'break-all', maxWidth: 220 }}>
               {content.length > 50 ? content.slice(0, 50) + '…' : content}
             </div>
           </>
         ) : (
-          <div style={{ textAlign: 'center', color: 'var(--ink4)' }}>
+          <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
             <div style={{ fontSize: 2.5+'rem', marginBottom: 10, opacity: .3 }}>◉</div>
             <div style={{ fontSize: '.875rem' }}>Enter content to generate a QR code</div>
           </div>

@@ -43,7 +43,7 @@ export default function ForexGrid({ initialData }) {
         <div style={{ position: 'relative', flex: 1 }}>
           <span style={{
             position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
-            color: 'var(--ink4)', fontSize: '1rem', pointerEvents: 'none',
+            color: 'var(--text-muted)', fontSize: '1rem', pointerEvents: 'none',
           }}>⌕</span>
           <input
             type="text"
@@ -56,7 +56,7 @@ export default function ForexGrid({ initialData }) {
         <div style={{
           display: 'flex', alignItems: 'center', padding: '0 14px',
           background: 'var(--surface)', border: '1px solid var(--border)',
-          borderRadius: 'var(--r-sm)', fontSize: '.8rem', color: 'var(--ink3)',
+          borderRadius: 'var(--radius-md)', fontSize: '.8rem', color: 'var(--text-tertiary)',
           whiteSpace: 'nowrap',
         }}>
           {filtered.length} currencies
@@ -65,7 +65,7 @@ export default function ForexGrid({ initialData }) {
 
       {/* GRID */}
       {filtered.length === 0 ? (
-        <div style={{ padding: '40px 0', color: 'var(--ink4)', fontSize: '.9rem' }}>
+        <div style={{ padding: '40px 0', color: 'var(--text-muted)', fontSize: '.9rem' }}>
           No currencies found for "{query}".
         </div>
       ) : (
