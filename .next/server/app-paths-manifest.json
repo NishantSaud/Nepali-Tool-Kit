@@ -1,3 +1,5 @@
 {
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/gold-silver/page": "app/gold-silver/page.js",
+  "/api/gold/history/route": "app/api/gold/history/route.js"
 }
